@@ -32,6 +32,8 @@ class MessageBubble extends React.Component {
         ]}
       >
         <View
+          style={styles.cloud_date}>
+        <View
           style={[
             styles.cloud,
             {
@@ -91,13 +93,20 @@ class MessageBubble extends React.Component {
                   y="0"
               />
             </Svg>
+
           </View>
+          
         </View>
+        <Text style={this.props.mine ? styles.date_left : styles.date_right}>
+            {this.props.date}
+        </Text>
+        </View>
+
+
       </View>
     )
   }
 }
-
 export default MessageBubble
 
 const styles = StyleSheet.create({
@@ -117,7 +126,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(10,2),
     paddingTop: moderateScale(5,2),
     paddingBottom: moderateScale(7,2),
-    borderRadius: 20
+    borderRadius: 20,
+    flexDirection: 'row'
   },
   text: {
     paddingTop: 3,
@@ -142,10 +152,28 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   arrow_left: {
-    left: moderateScale(-6, 0.5)
+    left: moderateScale(-6, 0.5),
   },
   arrow_right: {
     right: moderateScale(-6, 0.5)
+  },
+  cloud_date: {
+    flexDirection: 'column'
+    
+  },
+  date_left: {
+    marginTop:5,
+    textAlign: 'left',
+    marginLeft: 10
+
+  },
+  date_right: {
+    marginTop:5,
+    textAlign: 'right',
+    marginRight: 10
+
   }
+
+
 
 })
