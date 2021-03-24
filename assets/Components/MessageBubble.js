@@ -31,6 +31,7 @@ class MessageBubble extends React.Component {
           this.props.mine ? styles.mine : styles.not_mine
         ]}
       >
+        
         <View
           style={styles.cloud_date}>
         <View
@@ -93,16 +94,19 @@ class MessageBubble extends React.Component {
                   y="0"
               />
             </Svg>
-
+            
           </View>
-          
         </View>
-        <Text style={this.props.mine ? styles.date_left : styles.date_right}>
-            {this.props.date}
-        </Text>
+        <View style={[{flexDirection: this.props.mine ? 'row' : 'row-reverse'},{marginLeft: this.props.mine ? -35:0},{marginRight: this.props.mine ? 0:-35}]
+        }>
+          <Image style={styles.img_circle }
+          source={require('./logo_transparent_coloured.png')}></Image>
+          <Text style={this.props.mine ? styles.date_left : styles.date_right}>
+              {this.props.date}
+          </Text>
         </View>
 
-
+        </View>
       </View>
     )
   }
@@ -115,11 +119,11 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(7,2)
   },
   mine: {
-    marginLeft: 20,
+    marginLeft: 40,
   },
   not_mine: {
     alignSelf: 'flex-end',
-    marginRight: 20
+    marginRight: 40
   },
   cloud: {
     maxWidth: moderateScale(250,2),
@@ -132,7 +136,8 @@ const styles = StyleSheet.create({
   text: {
     paddingTop: 3,
     fontSize: 17,
-    lineHeight: 22
+    lineHeight: 22,
+    maxWidth:200  // Fait varier la taille max des msg avant passage de ligne
   },
   arrow_container: {
     position:'absolute',
@@ -158,8 +163,7 @@ const styles = StyleSheet.create({
     right: moderateScale(-6, 0.5)
   },
   cloud_date: {
-    flexDirection: 'column'
-    
+    flexDirection: 'column'    
   },
   date_left: {
     marginTop:5,
@@ -172,6 +176,14 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginRight: 10
 
+  },
+
+  img_circle:{
+    marginTop: -5,
+    borderRadius: 50,
+    height:50,
+    width:50,
+    backgroundColor: 'rgba(52,52,52,0.5)'
   }
 
 
