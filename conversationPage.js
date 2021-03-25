@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RefreshControl, StyleSheet, Text } from 'react-native';
-import MessageBubble from './components/MessageBubble';
+import MessageBubble from './Components/MessageBubble';
 import listMessages from './messages.json'
 
 
