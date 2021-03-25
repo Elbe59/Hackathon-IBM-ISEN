@@ -1,16 +1,102 @@
-import React from 'react'; 
+import React, {useState, useCallback} from 'react'; 
 import { 
-  SafeAreaView, View
+  SafeAreaView, View, Button
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { RefreshControl, StyleSheet, Text } from 'react-native';
+import MessageBubble from './components/MessageBubble';
+import listMessages from './messages.json'
 
-import MessageBubble from './Components/MessageBubble'
 
-class App extends React.Component {
-  render(){
+const App = () => {
+
+      const [refreshing, setRefreshing] = useState(false);
+
+      const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+      const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        wait(1000).then(() => setRefreshing(false)); //Don't need to wait in our case
+      }, []);
+
+    const refreshAndAddMessage = () =>{
+      onRefresh();
+      dataSource.push({"mine":true,"text":"vhkdrel elvzjv","horaire":"10:02"});
+    }
+
+    var dataSource = listMessages;
+
+
     return(
         <SafeAreaView>
-            <ScrollView style={{paddingBottom:100}}>
+        <Button onPress={() => refreshAndAddMessage()}
+        title="Send Message"/>
+        
+            <ScrollView 
+            refreshControl={
+              <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}/>
+            }
+            >
+            {
+              dataSource.map(addMessageBubble)
+            }
+            <MessageBubble
+              mine
+              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "Salut !"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+            mine
+            text="Bof et toi?"
+            horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              mine
+              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "Salut !"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+            mine
+            text="Bof et toi?"
+            horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              mine
+              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "Salut !"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
+              horaire = {getCurrentDate()}
+            />
+            <MessageBubble
+            mine
+            text="Bof et toi?"
+            horaire = {getCurrentDate()}
+            />
             <MessageBubble
               mine
               text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
@@ -18,81 +104,44 @@ class App extends React.Component {
             />
             <MessageBubble
               text = "Salut !"
-              date = {getCurrentDate()}
+              horaire = {getCurrentDate()}
             />
             <MessageBubble
               text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              date = {getCurrentDate()}
+              horaire = {getCurrentDate()}
             />
             <MessageBubble
             mine
             text="Bof et toi?"
-            date = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            date = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            date = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            date = {getCurrentDate()}
+            horaire = {getCurrentDate()}
             />
           </ScrollView>
         </SafeAreaView>
     )
   }
+  const ItemView = (item) => {
+    return (
+      // Flat List Item
+      <View>
+        {item.id}. {item.title}. {item.body}
+      </View>
+    );
+  };
+const addMessageBubble = (message) =>{
+    return(
+    <MessageBubble
+        mine = {message.mine}
+        text = {message.text}
+        horaire = {message.horaire} //getCurrentDate()}
+    />
+    );
+
 }
+
 
 const getCurrentDate = () => {
   var dateHours = new Date().getHours();
   var dateMin = new Date().getMinutes();
-  console.log(dateMin);
   if (dateMin.toLocaleString().length < 2){
     dateMin = '0'+dateMin;
   }
@@ -101,7 +150,6 @@ const getCurrentDate = () => {
   }
 
   let date = dateHours + ':' + dateMin;
-  console.log(date);
   return date;
 }
 

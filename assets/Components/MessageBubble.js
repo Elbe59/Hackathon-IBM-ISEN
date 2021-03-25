@@ -101,7 +101,7 @@ class MessageBubble extends React.Component {
           <Image style={[styles.img_circle ,{marginRight: this.props.mine ? 0:-35},{marginLeft: this.props.mine ? -35:0}]}
           source={require('./logo_transparent_coloured.png')}></Image>
           <Text style={this.props.mine ? styles.date_left : styles.date_right}>
-              {this.props.date}
+              {this.props.horaire}
           </Text>
         </View>
 
