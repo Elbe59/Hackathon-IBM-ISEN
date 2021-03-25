@@ -1,7 +1,7 @@
 // Import react
 import React from 'react'
 
-// Import react-native components
+// Import react-native components hg
 import {
   StyleSheet,
   View,
