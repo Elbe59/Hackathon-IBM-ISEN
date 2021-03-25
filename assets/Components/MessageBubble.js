@@ -97,9 +97,8 @@ class MessageBubble extends React.Component {
             
           </View>
         </View>
-        <View style={[{flexDirection: this.props.mine ? 'row' : 'row-reverse'},{marginLeft: this.props.mine ? -35:0},{marginRight: this.props.mine ? 0:-35}]
-        }>
-          <Image style={styles.img_circle }
+        <View style={[{flexDirection: this.props.mine ? 'row' : 'row-reverse'}]}>
+          <Image style={[styles.img_circle ,{marginRight: this.props.mine ? 0:-35},{marginLeft: this.props.mine ? -35:0}]}
           source={require('./logo_transparent_coloured.png')}></Image>
           <Text style={this.props.mine ? styles.date_left : styles.date_right}>
               {this.props.date}

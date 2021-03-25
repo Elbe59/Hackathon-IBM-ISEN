@@ -29,7 +29,7 @@ class App extends React.Component {
             text="Bof et toi?"
             date = {getCurrentDate()}
             />
-                        <MessageBubble
+            <MessageBubble
               mine
               text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
               date = {getCurrentDate()}
@@ -47,7 +47,7 @@ class App extends React.Component {
             text="Bof et toi?"
             date = {getCurrentDate()}
             />
-                        <MessageBubble
+            <MessageBubble
               mine
               text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
               date = {getCurrentDate()}
@@ -65,7 +65,7 @@ class App extends React.Component {
             text="Bof et toi?"
             date = {getCurrentDate()}
             />
-                        <MessageBubble
+            <MessageBubble
               mine
               text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
               date = {getCurrentDate()}
