@@ -1,7 +1,4 @@
-// Import react
 import React from 'react'
-
-// Import react-native components hg
 import {
   StyleSheet,
   View,
@@ -9,20 +6,9 @@ import {
   Image
 } from 'react-native'
 
-// Import react-native-svg
-// from 'https://github.com/react-native-community/react-native-svg'
 import Svg, { Path } from 'react-native-svg'
-
-// Import react-native-size-matters
-// from 'https://github.com/nirsky/react-native-size-matters'
 import { moderateScale } from 'react-native-size-matters'
 
-// Props info list
-// 1. mine (bool) => renders blue bubble on right
-// 2. text (string) => renders text message
-// 3. image (image file) => renders image inside bubble
-
-// Declare component 
 class MessageBubble extends React.Component {
   render(){
     return (

@@ -106,7 +106,7 @@ const App = () => {
             } 
         }}
           />
-          <Button
+          <Button style = {styles.btn_send}
           title="Envoyer"
           onPress={() => refreshAndAddMessage(true, inputText)}/>
         </View>
@@ -145,7 +145,7 @@ const getCurrentDate = () => {
 
 const styles = StyleSheet.create({
   btn_send:{
-    
+    width: "20%"
   },
   input:{
    marginLeft: 20,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
    borderWidth: 0.5,
    borderRadius: 4,
    backgroundColor: "#fff",
-   flex: 1
+   width: "80%"
   }
 })
 
