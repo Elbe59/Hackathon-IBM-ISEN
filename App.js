@@ -129,6 +129,7 @@ const addMessageBubble = (message,key) =>{
         horaire = {message.horaire} //getCurrentDate()}
     />
     );
+}
 
 const getCurrentDate = () => {
   var dateHours = new Date().getHours();
