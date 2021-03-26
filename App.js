@@ -80,9 +80,14 @@ const App = () => {
 
     var dataSource = listMessages;
 
+    const scrollViewRef = useRef();
+
     return(
-        <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 10,paddingBottom:10}}>        
-            <ScrollView 
+        <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20,paddingBottom:10}}>        
+            <ScrollView
+              ref={scrollViewRef}
+              onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+              style={{flex: 2}} 
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
@@ -94,7 +99,7 @@ const App = () => {
               dataSource.map(addMessageBubble)
             }
           </ScrollView>
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
           <TextInput
           style={styles.input}
           placeholder='Ajouter votre texte ...'
@@ -106,11 +111,13 @@ const App = () => {
             } 
         }}
           />
-          <Button style = {styles.btn_send}
+        <View style={{marginRight: 20, marginTop: 20, alignSelf: 'center'}}>
+          <Button
           title="Envoyer"
           onPress={() => refreshAndAddMessage(true, inputText)}/>
         </View>
-        </SafeAreaView>
+      </View>
+      </SafeAreaView>
     )
   }
 const addMessageBubble = (message,key) =>{
@@ -122,9 +129,6 @@ const addMessageBubble = (message,key) =>{
         horaire = {message.horaire} //getCurrentDate()}
     />
     );
-
-}
-
 
 const getCurrentDate = () => {
   var dateHours = new Date().getHours();
@@ -138,24 +142,23 @@ const getCurrentDate = () => {
 
   let date = dateHours + ':' + dateMin;
   return date;
-}
+};
 
 
 
 
 const styles = StyleSheet.create({
-  btn_send:{
-    width: "20%"
-  },
   input:{
-   marginLeft: 20,
-   marginRight: 20,
-   padding: 10,
-   borderWidth: 0.5,
-   borderRadius: 4,
-   backgroundColor: "#fff",
-   width: "80%"
+  marginTop: 20,
+  marginLeft: 20,
+  marginRight: 20,
+  padding: 10,
+  borderWidth: 0.5,
+  borderRadius: 4,
+  backgroundColor: "#fff",
+  flex: 4,
+  flexDirection: 'row'
   }
-})
+});
 
 export default App;
