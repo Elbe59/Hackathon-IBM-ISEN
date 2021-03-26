@@ -163,19 +163,19 @@ const styles = StyleSheet.create({
     right: moderateScale(-6, 0.5)
   },
   cloud_date: {
-    flexDirection: 'column'    
+    flexDirection: 'column'
   },
   date_left: {
-    marginTop:5,
+    marginTop: 5,
     textAlign: 'left',
-    marginLeft: 10
-
+    marginLeft: 10,
+    minWidth: 40
   },
   date_right: {
     marginTop:5,
     textAlign: 'right',
-    marginRight: 10
-
+    marginRight: 10,
+    minWidth: 40
   },
 
   img_circle:{
