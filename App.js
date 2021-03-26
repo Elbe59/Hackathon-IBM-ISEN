@@ -1,20 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { render } from 'react-dom';
+import { ScrollView, StyleSheet, Text, View, Dimensions, Animated, TouchableOpacity } from 'react-native';
+import CardFlip from 'react-native-card-flip';
+import * as Animatable from 'react-native-animatable';
+import {ClueX} from "./ClueX";
 
 var DomParser = require('react-native-html-parser').DOMParser
 
 export default function App() {
-  let scrollViewRef = React.createRef();
   const windowHeight = Dimensions.get('window').height;
 
   let [Pi, setPi] = useState("");
   let [decimalPi, setDecimalPi] = useState(0);
   let [XRaw, setXRaw] = useState("");
   let [X, setX] = useState("");
+  let [showDecimalPi, setShowDecimalPi] = useState(false);
 
   let [YUrl, setYUrl] = useState("");
   let [Y, setY] = useState("");
+
+  let [animatedStyle, setAnimatedStyle] = useState({});
+  
+  let [cardsValues, setCardsValues] = useState([]);
+
+  let [hide_XRaw, setHide_XRaw] = useState(false);
 
   FetchPi = () => {
     fetch('https://uploadbeta.com/api/pi/?cached&n=300000')
@@ -27,8 +37,6 @@ export default function App() {
         setDecimalPi(i);
         setXRaw(outputRaw);
         setX(output);
-
-        console.log(text);
     }).catch((e) => console.error(e.message))
   }
 
@@ -48,7 +56,7 @@ export default function App() {
     }).then(function (html) {
       var root = new DomParser().parseFromString(html,'text/html');
       var elem = root.getElementsByClassName("item center")[0];
-      setY(String(elem).split(/[><]/)[2]); // due to an error witht the node module... 
+      setY(String(elem).split(/[><]/)[2]); // due to an error with the node module... 
     }).catch(function (err) {
       console.warn('Something went wrong.', err);
     });
@@ -57,39 +65,16 @@ export default function App() {
   useEffect(() => {
     FetchPi();
     TranslateURL();
+    
     setTimeout(() => {
-      try {
-        scrollViewRef.scrollToEnd({animated: true, duration:10000});
-      } catch (error) {
-        console.log(error)
-      }
+      setShowDecimalPi(true)
     }, 2000);
+    
   }, []);
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        ref={(r) => scrollViewRef=r}
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={false}
-      >
-        <View style={{alignItems:"center", justifyContent:"center"}}>
-          <Text>We have:</Text>
-          <Text>X = {X}</Text>
-          <Text>Y = {YUrl} = {Y}</Text>
-          <Text>Z = 'X'+'Y' Lille</Text>
-          <Text></Text>
-          <Text>Thus:</Text>
-          <Text>Z = {X}+{Y} Lille</Text>
-          <Text>{XRaw}</Text>
-        </View>
-        <Text style={{textAlign:"justify", fontSize:36, fontWeight:"600"}}>
-          {Pi}
-          <Text style={{fontSize:36, fontWeight:"bold", color:"red"}}>{XRaw}</Text>
-        </Text>
-        <Text style={{textAlign:"center", fontSize:22, marginTop:25,   paddingBottom:windowHeight/2.5}}>{decimalPi}th decimal of π</Text>
-      </ScrollView>
-
+      <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi}/>
       <StatusBar style="auto" hidden />
     </View>
   );
@@ -101,5 +86,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  box: {
+    height:50,
+    width: 50,
+    backgroundColor: "black",
+    position: "absolute"
+  },
+  cardContainer: {
+    flex: 1,
+    height: 100,
+    marginHorizontal: 2,
+  },
+  card: {
+    flex: 1,
+    height: 50,
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+    shadowColor: 'rgba(0,0,0, 1)',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.5,
   },
 });
