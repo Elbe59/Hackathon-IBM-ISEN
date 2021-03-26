@@ -48,7 +48,7 @@ const App = () => {
         }
       })
       .then((responseJson) => {
-          console.log(responseJson);
+          //console.log(responseJson);
           setSessionId(responseJson.response);
       })
       .catch((error) => {
@@ -57,7 +57,7 @@ const App = () => {
     }    
 
     const sendMessageToBot = (messageText) =>{
-      console.log(sessionId);
+      //console.log(sessionId);
       fetch(url, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
         sessionId: sessionId, reqText: messageText
       })
@@ -69,9 +69,8 @@ const App = () => {
         }
       })
       .then((responseJson) => {
-          console.log(responseJson);
-          //setMessageFromBot(responseJson.response);
-          console.log(responseJson.response);
+          //console.log(responseJson);
+          //console.log(responseJson.response);
           refreshAndAddMessage(false,responseJson.response);
       })
       .catch((error) => {
@@ -83,7 +82,6 @@ const App = () => {
 
     return(
         <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 10,paddingBottom:10}}>        
-            <Text>{sessionId}</Text>
             <ScrollView 
               refreshControl={
                 <RefreshControl
@@ -146,6 +144,9 @@ const getCurrentDate = () => {
 
 
 const styles = StyleSheet.create({
+  btn_send:{
+    
+  },
   input:{
    marginLeft: 20,
    marginRight: 20,
