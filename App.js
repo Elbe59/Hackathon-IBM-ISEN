@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef} from 'react'; 
+import React, {useState, useCallback, useRef, useEffect} from 'react'; 
 import { 
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView
 } from 'react-native';
@@ -9,33 +9,81 @@ import listMessages from './messages.json'
 const App = () => {
       const [refreshing, setRefreshing] = useState(false);
       const [inputText, setInputText] = useState("");
+      const [sessionId, setSessionId] = useState("");
+      const [messageFromBot, setMessageFromBot] = useState("")
 
+      const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
       const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-      const onRefresh = useCallback(() => {
+
+    useEffect(() => {
+      getSession(url);
+    }, []) 
+
+    const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(100).then(() => setRefreshing(false)); //Don't need to wait to load the messages
       }, []);
-
-    const refreshAndAddMessage = (mine) =>{
-      if(inputText!=""){
+    const refreshAndAddMessage = (mine,textMessage) =>{
+      if(textMessage!=""){
+        if(mine){  // Si j'envoie un message, je l'envoie aussi au Bot
+          sendMessageToBot(textMessage);
+        }
+        dataSource.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate()});
         onRefresh();
-        dataSource.push({"mine":mine,"text":inputText,"horaire":getCurrentDate()});
+
         submitText();
       }
     }
     const submitText = () => {
-      setInputText("");
+      setInputText("")
     }
+    const getSession = () =>{
+      fetch(url + '/session').then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      })
+      .then((responseJson) => {
+          console.log(responseJson);
+          setSessionId(responseJson.response);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    }    
+
+    const sendMessageToBot = (messageText) =>{
+      console.log(sessionId);
+      fetch(url, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        sessionId: sessionId, reqText: messageText
+      })
+    }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+        }
+      })
+      .then((responseJson) => {
+          console.log(responseJson);
+          //setMessageFromBot(responseJson.response);
+          console.log(responseJson.response);
+          refreshAndAddMessage(false,responseJson.response);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    }  
 
     var dataSource = listMessages;
 
     return(
-        <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 10,paddingBottom:10}}>
-        <Button onPress={() => refreshAndAddMessage()}
-        title="Send Message"/>
-        
+        <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 10,paddingBottom:10}}>        
+            <Text>{sessionId}</Text>
             <ScrollView 
               refreshControl={
                 <RefreshControl
@@ -56,28 +104,21 @@ const App = () => {
           value={inputText}
           onKeyPress={ (event) => {
             if(event.nativeEvent.key == "Enter"){
-              refreshAndAddMessage(true)
+              refreshAndAddMessage(true, inputText)
             } 
         }}
           />
           <Button
           title="Envoyer"
-          onPress={() => refreshAndAddMessage(true)}/>
+          onPress={() => refreshAndAddMessage(true, inputText)}/>
         </View>
         </SafeAreaView>
     )
   }
-  const ItemView = (item) => {
-    return (
-      // Flat List Item
-      <View>
-        {item.id}. {item.title}. {item.body}
-      </View>
-    );
-  };
-const addMessageBubble = (message) =>{
+const addMessageBubble = (message,key) =>{
     return(
     <MessageBubble
+        key = {key}
         mine = {message.mine}
         text = {message.text}
         horaire = {message.horaire} //getCurrentDate()}
@@ -100,6 +141,9 @@ const getCurrentDate = () => {
   let date = dateHours + ':' + dateMin;
   return date;
 }
+
+
+
 
 const styles = StyleSheet.create({
   input:{

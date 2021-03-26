@@ -80,7 +80,7 @@ class MessageBubble extends React.Component {
               width={moderateScale(15.5, 0.6)}
               height={moderateScale(17.5, 0.6)}
               viewBox="32.484 17.5 15.515 17.5"
-              enable-background="new 32.485 17.5 15.515 17.5"
+              enableBackground="new 32.485 17.5 15.515 17.5"
             >
               <Path
                   d={ this.props.mine 
@@ -99,8 +99,12 @@ class MessageBubble extends React.Component {
           </View>
         </View>
         <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
-          <Image style={[this.props.mine ?  '' : styles.img_circle ,{marginRight: this.props.mine ? -35:0},{marginLeft: this.props.mine ? 0:-35}]}
-          source= {this.props.mine ? '' : require('./logo_transparent_coloured.png')}></Image>
+        {!this.props.mine && 
+            <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-35}]}
+              source= {require('./logo_transparent_coloured.png')}
+            >
+            </Image>
+          }
           <Text style={this.props.mine ? styles.date_right : styles.date_left }>
               {this.props.horaire}
           </Text>
