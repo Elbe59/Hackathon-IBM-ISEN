@@ -38,7 +38,7 @@ class MessageBubble extends React.Component {
           style={[
             styles.cloud,
             {
-              backgroundColor: this.props.mine ? '#dddddd' : '#007aff'
+              backgroundColor: this.props.mine ? '#007aff' : '#dddddd'
             }
           ]}
         >
@@ -46,7 +46,7 @@ class MessageBubble extends React.Component {
             this.props.image
             ?
               <Image
-                style={{alignSelf: this.props.mine ? 'flex-start' : 'flex-end' }}
+                style={{alignSelf: this.props.mine ? 'flex-end' : 'flex-start' }}
                 borderRadius={10}
                 source={this.props.image}
               />
@@ -60,7 +60,7 @@ class MessageBubble extends React.Component {
                 style={[
                   styles.text,
                   {
-                    color: this.props.mine ? 'black' : 'white'
+                    color: this.props.mine ? 'white' : 'black'
                   }
                 ]}
               >
@@ -72,11 +72,11 @@ class MessageBubble extends React.Component {
           <View
             style={[
               styles.arrow_container,
-              this.props.mine ? styles.arrow_left_container : styles.arrow_right_container
+              this.props.mine ? styles.arrow_right_container : styles.arrow_left_container
             ]}
           >
             <Svg
-              style={this.props.mine ? styles.arrow_left : styles.arrow_right}
+              style={this.props.mine ? styles.arrow_right : styles.arrow_left}
               width={moderateScale(15.5, 0.6)}
               height={moderateScale(17.5, 0.6)}
               viewBox="32.484 17.5 15.515 17.5"
@@ -85,11 +85,12 @@ class MessageBubble extends React.Component {
               <Path
                   d={ this.props.mine 
                       ? 
-                      "M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z"
-                      : 
                       "M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z"
+                      : 
+                      "M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z"
+                      
                   }
-                  fill={this.props.mine ? '#dddddd' : '#007AFF'}
+                  fill={this.props.mine ? '#007AFF' : '#dddddd'}
                   x="0"
                   y="0"
               />
@@ -97,10 +98,10 @@ class MessageBubble extends React.Component {
             
           </View>
         </View>
-        <View style={[{flexDirection: this.props.mine ? 'row' : 'row-reverse'}]}>
-          <Image style={[styles.img_circle ,{marginRight: this.props.mine ? 0:-35},{marginLeft: this.props.mine ? -35:0}]}
-          source={require('./logo_transparent_coloured.png')}></Image>
-          <Text style={this.props.mine ? styles.date_left : styles.date_right}>
+        <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
+          <Image style={[this.props.mine ?  '' : styles.img_circle ,{marginRight: this.props.mine ? -35:0},{marginLeft: this.props.mine ? 0:-35}]}
+          source= {this.props.mine ? '' : require('./logo_transparent_coloured.png')}></Image>
+          <Text style={this.props.mine ? styles.date_right : styles.date_left }>
               {this.props.horaire}
           </Text>
         </View>
@@ -117,10 +118,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: moderateScale(7,2)
   },
-  mine: {
+  not_mine: {
     marginLeft: 40,
   },
-  not_mine: {
+  mine: {
     alignSelf: 'flex-end',
     marginRight: 40
   },
