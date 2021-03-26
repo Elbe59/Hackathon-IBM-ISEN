@@ -1,121 +1,67 @@
-import React, {useState, useCallback} from 'react'; 
+import React, {useState, useCallback, useRef} from 'react'; 
 import { 
-  SafeAreaView, View, Button
+  SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { RefreshControl, StyleSheet, Text } from 'react-native';
 import MessageBubble from './Components/MessageBubble';
 import listMessages from './messages.json'
 
 
 const App = () => {
-
       const [refreshing, setRefreshing] = useState(false);
+      const [inputText, setInputText] = useState("");
 
       const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
       const onRefresh = useCallback(() => {
         setRefreshing(true);
-        wait(1000).then(() => setRefreshing(false)); //Don't need to wait in our case
+        wait(100).then(() => setRefreshing(false)); //Don't need to wait to load the messages
       }, []);
 
     const refreshAndAddMessage = () =>{
       onRefresh();
-      dataSource.push({"mine":true,"text":"vhkdrel elvzjv","horaire":"10:02"});
+      dataSource.push({"mine":false,"text":inputText,"horaire":getCurrentDate()});
+      submitText();
+    }
+    const submitText = () => {
+      setInputText("");
     }
 
     var dataSource = listMessages;
 
-
     return(
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
         <Button onPress={() => refreshAndAddMessage()}
         title="Send Message"/>
         
             <ScrollView 
-            refreshControl={
-              <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}/>
-            }
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}/>
+              } 
+              showsVerticalScrollIndicator={false}
             >
             {
               dataSource.map(addMessageBubble)
             }
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              mine
-              text = "CoucoursgdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF"
-              date = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "Salut !"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-              text = "ça va gdtfdfilkujyfdgsfqdQSWDXTFYGUIHOLKJHGFDSERQRERTYFYOGUIJNHGRRDFYIUIKYJNHGREFREGTSTDUTHGFVDSDSFDF?"
-              horaire = {getCurrentDate()}
-            />
-            <MessageBubble
-            mine
-            text="Bof et toi?"
-            horaire = {getCurrentDate()}
-            />
           </ScrollView>
+          <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+          <TextInput
+          style={styles.input}
+          placeholder='Ajouter votre texte ...'
+          onChangeText={(input) => setInputText(input)}
+          value={inputText}
+          onKeyPress={ (event) => {
+            if(event.nativeEvent.key == "Enter"){
+              refreshAndAddMessage()
+            } 
+        }}
+          />
+          <Button
+          title="Envoyer"
+          onPress={() => refreshAndAddMessage()}/>
+        </View>
         </SafeAreaView>
     )
   }
@@ -152,5 +98,17 @@ const getCurrentDate = () => {
   let date = dateHours + ':' + dateMin;
   return date;
 }
+
+const styles = StyleSheet.create({
+  input:{
+   marginLeft: 20,
+   marginRight: 20,
+   padding: 10,
+   borderWidth: 0.5,
+   borderRadius: 4,
+   backgroundColor: "#fff",
+   flex: 1
+  }
+})
 
 export default App;
