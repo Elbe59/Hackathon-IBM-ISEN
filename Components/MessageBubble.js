@@ -28,7 +28,7 @@ class MessageBubble extends React.Component {
             }
           ]}
         >
-          {
+          {/* {
             this.props.image
             ?
               <Image
@@ -38,7 +38,7 @@ class MessageBubble extends React.Component {
               />
             :
               null
-          }
+          } */}
           {
             this.props.text 
             ?
@@ -86,7 +86,7 @@ class MessageBubble extends React.Component {
         </View>
         <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
         {!this.props.mine && 
-            <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-35}]}
+            <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-50}]}
               source= {require('./logo_transparent_coloured.png')}
             >
             </Image>
@@ -106,14 +106,14 @@ export default MessageBubble
 const styles = StyleSheet.create({
   message: {
     flexDirection: 'row',
-    marginVertical: moderateScale(7,2)
+    marginVertical: moderateScale(4,2)
   },
   not_mine: {
-    marginLeft: 40,
+    marginLeft: 60,
   },
   mine: {
     alignSelf: 'flex-end',
-    marginRight: 40
+    marginRight: 20
   },
   cloud: {
     maxWidth: moderateScale(250,2),
@@ -169,13 +169,11 @@ const styles = StyleSheet.create({
   },
 
   img_circle:{
-    marginTop: -5,
+    marginTop: -10,
     borderRadius: 50,
     height:50,
     width:50,
     backgroundColor: 'rgba(52,52,52,0.5)'
   }
-
-
 
 })
