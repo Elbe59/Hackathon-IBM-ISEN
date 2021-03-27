@@ -128,11 +128,7 @@ const App = () => {
         showsVerticalScrollIndicator={false}
       >
         { dataSource.length > 0 &&
-          dataSource.map((message, index) => {
-            
-            console.log(message);
-
-            return (
+          dataSource.map((message, index) => (
               <MessageBubble
                 key = {index}
                 mine = {message.mine}
@@ -140,9 +136,7 @@ const App = () => {
                 horaire = {message.horaire}
                 isSessionOff = {message.isSessionOff}
               />
-            )
-
-          })
+          ))
         }
       </ScrollView>
       <ScrollView horizontal={true} style={{flexDirection: 'row', height: 80, paddingTop: 20}}>
@@ -173,16 +167,6 @@ const App = () => {
         <TouchableOpacity onPress={() => refreshAndAddMessage(true,"Test")}>
           <Text style={{marginLeft: 30}}>Test</Text>
         </TouchableOpacity>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
        </ScrollView>
       <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
         <TextInput
