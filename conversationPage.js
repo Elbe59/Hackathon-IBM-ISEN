@@ -1,7 +1,9 @@
 import React, {useState, useCallback, useRef, useEffect} from 'react'; 
+import Snackbar from 'react-native-snackbar';
 import { 
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView, Image, TouchableOpacity
 } from 'react-native';
+import LinearTimer from 'react-native-linear-timer';
 import MessageBubble from './Components/MessageBubble';
 import messagesInitiauxBot from './messagesInitiauxBot.json'
 
@@ -15,6 +17,9 @@ const App = () => {
   const [isSessionOff, setSessionOff] = useState(false);
   const scrollViewRef = useRef();
   const motDefini = ["Solution","IBM","J\'aime Lille","Indice 1","Indice 2","Indice 3","Bonjour","J\'aime IBM","Qui est tu ?"]
+  const indice_1 = "X = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
+  const indice_2 = "Y = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
+  const indice_3 = "Z = 'X'+'Y' Lille";
 
 
   const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
@@ -46,8 +51,12 @@ const App = () => {
       setSessionOff(false);
     }
     if(textMessage!=""){
-      if(mine){  // Si j'envoie un message, je l'envoie aussi au Bot
-      sendMessageToBot(textMessage);
+      let dataSource_temp = dataSource;
+      dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate(),"isSessionOff":false});
+      setDataSource(dataSource_temp);
+      onRefresh(); 
+      if(mine){  // Si j'envoie un message, je l'envoie aussi au Bot sauf si indice1-2-3 ou réponse.
+        sendMessageToBot(textMessage);
       if(timeOut_ID != undefined){
         clearTimeout(timeOut_ID);
       }
@@ -59,17 +68,11 @@ const App = () => {
         onRefresh();
       }, 5*1000);
     }
-      let dataSource_temp = dataSource;
-      dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate(),"isSessionOff":false});
-      setDataSource(dataSource_temp);
-      onRefresh();  
-      submitText();
+      setInputText("")
     }
   } 
 
-  const submitText = () => {
-    setInputText("")
-  }
+
 
   const getSession = () =>{
     fetch(url + '/session').then((response) => {
@@ -88,30 +91,45 @@ const App = () => {
   }    
 
   const sendMessageToBot = (messageText) =>{
-    fetch(url, { 
+    if(messageText == "Solution"){
+      
+    }
+    else if(messageText == "Indice 1"){
+      refreshAndAddMessage(false,indice_1);
+    }
+    else if(messageText == "Indice 2"){
+      refreshAndAddMessage(false,indice_2);
+    }
+    else if(messageText == "Indice 3"){
+      refreshAndAddMessage(false,indice_3);
+    }
+    else{
+      fetch(url, { 
         method: "POST", 
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({sessionId: sessionId, reqText: messageText})
-    })
-    .then((response) => {
+        })
+      .then((response) => {
       if (response.ok) {
         return response.json();
       } else {
         throw new Error('Something went wrong');
       }
-    })
-    .then((responseJson) => {
-      refreshAndAddMessage(false,responseJson.response);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
+      })
+      .then((responseJson) => {
+        refreshAndAddMessage(false,responseJson.response);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    }
+
   }
 
   return(
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
       <View style={{flexDirection: 'row'}}>
-        <View style={{marginTop: 20}}>
+        <View style={{margin: 20,marginRight:0}}>
         <Button title="RETOUR"/>
         </View>
       <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
@@ -120,6 +138,16 @@ const App = () => {
       <Image style={{width: 50, height: 50, marginLeft: 40, marginTop: 15}}
               source={require('./Components/logo_transparent_coloured.png')}
             />
+      </View>
+      <View>
+        <LinearTimer
+            textStyle={{paddingBottom:0,margin:0}}
+            min={5}
+            onTimeElapsed={() => {
+                console.log('Timer Finished!');
+                
+            }}
+        />
       </View>
       <ScrollView
         ref={scrollViewRef}
@@ -156,36 +184,6 @@ const App = () => {
           })
         }
         </ScrollView>
-      {/* <ScrollView horizontal={true} style={{flexDirection: 'row', height: 80, paddingTop: 20}}>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"IBM")}>
-          <Text style={{marginLeft: 30}}>IBM</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"solution")}>
-          <Text style={{marginLeft: 30}}>solution</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"J'aime Lille")}>
-          <Text style={{marginLeft: 30}}>J'aime Lille</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"réponse")}>
-          <Text style={{marginLeft: 30}}>réponse</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"énigme")}>
-          <Text style={{marginLeft: 30}}>énigme</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"bonjour")}>
-          <Text style={{marginLeft: 30}}>bonjour</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"au revoir")}>
-          <Text style={{marginLeft: 30}}>au revoir</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"J'aime IBM")}>
-          <Text style={{marginLeft: 30}}>J'aime IBM</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"Test")}>
-          <Text style={{marginLeft: 30}}>Test</Text>
-        </TouchableOpacity>
-
-       </ScrollView> */}
       <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
         <TextInput
         style={styles.input}
@@ -199,7 +197,7 @@ const App = () => {
         }}
         onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
         />
-        <View style={{marginRight: 20, marginTop: 20, alignSelf: 'center'}}>
+        <View style={{marginRight: 20, alignSelf: 'center'}}>
           <Button
             title="Envoyer"
             onPress={() => refreshAndAddMessage(true, inputText)}
