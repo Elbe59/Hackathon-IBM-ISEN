@@ -9,7 +9,7 @@ import messagesInitiauxBot from './messagesInitiauxBot.json'
 
 var timeOut_ID = undefined;      
 
-const App = () => {
+const PageMessagerie = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -130,7 +130,7 @@ const App = () => {
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
       <View style={{flexDirection: 'row'}}>
         <View style={{margin: 20,marginRight:0}}>
-        <Button title="RETOUR"/>
+        <Button title="RETOUR" onPress={() => this.props.navigation.navigate("PageMessagerie")} />
         </View>
       <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
         Conversation avec BOTTY
@@ -235,4 +235,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default PageMessagerie;

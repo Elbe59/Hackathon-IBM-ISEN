@@ -11,7 +11,7 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import { moderateScale } from 'react-native-size-matters'
 
-class pageAccueil extends React.Component {
+class PageAccueil extends React.Component {
   render(){
     return (
         <View style = {styles.principal}>
@@ -36,7 +36,7 @@ class pageAccueil extends React.Component {
             <Text style = {styles.contenu_indice}>
               Z = 'X'+'Y' Lille
             </Text>
-            <TouchableOpacity onPress={ () => console.log("Coucou")} >
+            <TouchableOpacity onPress={ () => this.props.navigation.navigate("PageMessagerie")} >
               <Image style = {styles.img_launch} source= {require('./Components/logo_transparent_coloured.png')}></Image>
             </TouchableOpacity>
 
@@ -44,30 +44,35 @@ class pageAccueil extends React.Component {
     )
   }
 }
-export default pageAccueil
+export default PageAccueil
 
 const styles = StyleSheet.create({
   principal:{
     flexDirection: 'column',
     textAlign: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 50
   },
   titre_App:{
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    alignSelf: 'center'
   },
   nom_indice:{
     padding:10,
     color: "#0000FF",
-    fontSize: 15
+    fontSize: 15,
+    alignSelf: 'center'
   },
   contenu_indice:{
     padding: 10,
-    fontSize: 10
+    fontSize: 10,
+    alignSelf: 'center'
   },
   img_launch:{
     height: 200,
     width: 200,
+    alignSelf: 'center'
   }
 
 })
