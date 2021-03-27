@@ -85,7 +85,7 @@ class MessageBubble extends React.Component {
         </View>
         <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
         {!this.props.mine && 
-            <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-50}]}
+            <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-40}]}
               source= {require('./logo_transparent_coloured.png')}
             >
             </Image>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(4,2)
   },
   not_mine: {
-    marginLeft: 60,
+    marginLeft: 50,
   },
   mine: {
     alignSelf: 'flex-end',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingTop: 3,
-    fontSize: 17,
+    fontSize: 15,
     lineHeight: 22,
     maxWidth:200,  // Fait varier la taille max des msg avant passage de ligne
   },
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   },
 
   img_circle:{
-    marginTop: -10,
+    marginTop: -8,
     borderRadius: 50,
-    height:50,
-    width:50,
+    height:38,
+    width:38,
     backgroundColor: 'rgba(52,52,52,0.5)'
   }
 
