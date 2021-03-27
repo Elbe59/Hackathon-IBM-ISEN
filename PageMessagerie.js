@@ -1,15 +1,13 @@
 import React, {useState, useCallback, useRef, useEffect} from 'react'; 
-import Snackbar from 'react-native-snackbar';
 import { 
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView, Image, TouchableOpacity
 } from 'react-native';
-import LinearTimer from 'react-native-linear-timer';
 import MessageBubble from './Components/MessageBubble';
-import messagesInitiauxBot from './messagesInitiauxBot.json'
+import messagesInitiauxBot from './messagesInitiauxBot.json';
 
 var timeOut_ID = undefined;      
 
-const PageMessagerie = () => {
+const PageMessagerie = ({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -130,23 +128,13 @@ const PageMessagerie = () => {
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
       <View style={{flexDirection: 'row'}}>
         <View style={{margin: 20,marginRight:0}}>
-        <Button title="RETOUR" onPress={() => this.props.navigation.navigate("PageMessagerie")} />
+            <Button title="RETOUR" onPress={() => navigation.navigate("PageAccueil")} />
         </View>
-      <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
-        Conversation avec BOTTY
-      </Text>
-      <Image style={{width: 50, height: 50, marginLeft: 40, marginTop: 15}}
-              source={require('./Components/logo_transparent_coloured.png')}
-            />
-      </View>
-      <View>
-        <LinearTimer
-            textStyle={{paddingBottom:0,margin:0}}
-            min={5}
-            onTimeElapsed={() => {
-                console.log('Timer Finished!');
-                
-            }}
+        <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
+            Conversation avec BOTTY
+        </Text>
+        <Image style={{width: 50, height: 50, marginLeft: 40, marginTop: 15}}
+            source={require('./Components/logo_transparent_coloured.png')}
         />
       </View>
       <ScrollView
