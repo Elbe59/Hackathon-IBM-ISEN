@@ -3,14 +3,16 @@ import {
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView
 } from 'react-native';
 import MessageBubble from './Components/MessageBubble';
-import listMessages from './messages.json'
+import listMessages from './messagesInitiauxBot.json'
 
 
 const App = () => {
       const [refreshing, setRefreshing] = useState(false);
       const [inputText, setInputText] = useState("");
       const [sessionId, setSessionId] = useState("");
-      const [messageFromBot, setMessageFromBot] = useState("")
+
+      var msg_from_bot_1 = {"mine":false,"text":"Bonjour à toi ! Moi c'est Botty !\nJe vais te proposer un jeu:\n\nVoici 3 indices, à toi d'essayer de résoudre mon énigme pour rentrer dans le classement:","horaire":getCurrentDate(),"isSessionOff":false};
+      var msg_from_bot_2 = {"mine":false,"text":"Indice 1:\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26\n\nIndice 2:\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/\n\nIndice 3:\nZ = 'X'+'Y' Lille","horaire":getCurrentDate(),"isSessionOff":false};
 
       const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
       const wait = (timeout) => {

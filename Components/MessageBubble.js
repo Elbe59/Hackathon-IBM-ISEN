@@ -14,18 +14,17 @@ class MessageBubble extends React.Component {
     return (
       <View style={[
           styles.message,
-          this.props.mine ? styles.mine : styles.not_mine
+          this.props.mine ? styles.mine : styles.not_mine,
         ]}
       >
         
         <View
+           
           style={styles.cloud_date}>
         <View
           style={[
             styles.cloud,
-            {
-              backgroundColor: this.props.mine ? '#007aff' : '#dddddd'
-            }
+            {backgroundColor: (this.props.mine && !this.props.isSessionOff) ? '#007aff' : '#dddddd'}
           ]}
         >
           {/* {
@@ -46,8 +45,8 @@ class MessageBubble extends React.Component {
                 style={[
                   styles.text,
                   {
-                    color: this.props.mine ? 'white' : 'black'
-                  }
+                    color: (this.props.mine || this.props.isSessionOff) ? 'white' : 'black'
+                  },
                 ]}
               >
                 {this.props.text}
@@ -76,7 +75,7 @@ class MessageBubble extends React.Component {
                       "M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z"
                       
                   }
-                  fill={this.props.mine ? '#007AFF' : '#dddddd'}
+                  fill={(this.props.mine && !this.props.isSessionOff) ? '#007AFF' : '#dddddd'}
                   x="0"
                   y="0"
               />
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     fontSize: 17,
     lineHeight: 22,
-    maxWidth:200  // Fait varier la taille max des msg avant passage de ligne
+    maxWidth:200,  // Fait varier la taille max des msg avant passage de ligne
   },
   arrow_container: {
     position:'absolute',
