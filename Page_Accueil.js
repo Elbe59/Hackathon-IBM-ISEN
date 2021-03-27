@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  Button,
   TouchableOpacity
 } from 'react-native'
 
@@ -35,6 +36,7 @@ class PageAccueil extends React.Component {
             <Text style = {styles.contenu_indice}>
               Z = 'X'+'Y' Lille
             </Text>
+            <Text style = {{alignSelf:'center'}}>Clique sur ma tête pour commencer la communication.</Text>
             <TouchableOpacity onPress={ () => this.props.navigation.navigate("PageMessagerie")} >
               <Image style = {styles.img_launch} source= {require('./Components/logo_transparent_coloured.png')}></Image>
             </TouchableOpacity>

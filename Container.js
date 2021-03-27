@@ -1,19 +1,19 @@
 import {createAppContainer} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
-import PageMessagerie from './PageMessagerie';
-import PageAccueil from './PageAccueil';
+import PageMessagerie from './Page_Messagerie';
+import PageAccueil from './Page_Accueil';
 
 const SearchStackNavigator = createStackNavigator({
     PageAccueil: {
       screen: PageAccueil,
       navigationOptions: {
-        header: false
+        headerShown: false
       }
     },
     PageMessagerie: {
         screen: PageMessagerie,
         navigationOptions: {
-          header: false
+          headerShown: false
         }
     }
   })

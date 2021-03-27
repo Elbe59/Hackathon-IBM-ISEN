@@ -1,13 +1,19 @@
 [
     {
         "mine": false,
-        "text": "Bonjour à toi ! Moi c'est Botty !\nJe vais te proposer un jeu:\n\nVoici 3 indices, à toi d'essayer de résoudre mon énigme pour rentrer dans le classement:",
+        "text": "Bonjour à toi ! Moi c'est Botty !\nJe vais te proposer un jeu.",
         "horaire": "",
         "isSessionOff": false
     },
     {
         "mine": false,
-        "text": "Indice 1:\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26\n\nIndice 2:\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/\n\nIndice 3:\nZ = 'X'+'Y' Lille",
+        "text": "Tu as pu voir 3 indices en page d'accueil. Essaye de résoudre mon énigme afin de rejoindre le classement.",
+        "horaire": "",
+        "isSessionOff": false
+    },
+    {
+        "mine": false,
+        "text": "Si tu as besoin d'aide je peux te redonner les indices et t'aider a les résoudres.\n\nBon courage !",
         "horaire": "",
         "isSessionOff": false
     }

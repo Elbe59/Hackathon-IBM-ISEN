@@ -2,6 +2,8 @@ import React, {useState, useCallback, useRef, useEffect} from 'react';
 import { 
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView, Image, TouchableOpacity
 } from 'react-native';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer']);
 import MessageBubble from './Components/MessageBubble';
 import messagesInitiauxBot from './messagesInitiauxBot.json';
 
@@ -15,9 +17,9 @@ const PageMessagerie = ({navigation}) => {
   const [isSessionOff, setSessionOff] = useState(false);
   const scrollViewRef = useRef();
   const motDefini = ["Solution","IBM","J\'aime Lille","Indice 1","Indice 2","Indice 3","Bonjour","J\'aime IBM","Qui est tu ?"]
-  const indice_1 = "X = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
-  const indice_2 = "Y = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
-  const indice_3 = "Z = 'X'+'Y' Lille";
+  const indice_1 = "Indice 1:\n\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
+  const indice_2 = "Indice 2:\n\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
+  const indice_3 = "Indice 3:\n\nZ = 'X'+'Y' Lille";
 
 
   const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
@@ -64,7 +66,7 @@ const PageMessagerie = ({navigation}) => {
           data.isSessionOff = true;
         })
         onRefresh();
-      }, 5*1000);
+      }, 5*60*1000);
     }
       setInputText("")
     }
@@ -127,13 +129,13 @@ const PageMessagerie = ({navigation}) => {
   return(
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
       <View style={{flexDirection: 'row'}}>
-        <View style={{margin: 20,marginRight:0}}>
-            <Button title="RETOUR" onPress={() => navigation.navigate("PageAccueil")} />
-        </View>
-        <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
+        <TouchableOpacity onPress={() => navigation.navigate("PageAccueil")} style={[styles.btn_send_return,{marginLeft:10}]}>
+          <Text style = {{fontSize:15}}>RETOUR</Text>
+        </TouchableOpacity>
+        <Text style={{margin:20, alignSelf: 'center',fontSize:15}}>
             Conversation avec BOTTY
         </Text>
-        <Image style={{width: 50, height: 50, marginLeft: 40, marginTop: 15}}
+        <Image style={{width: 50, height: 50,marginTop:7,marginLeft:5}}
             source={require('./Components/logo_transparent_coloured.png')}
         />
       </View>
@@ -159,37 +161,36 @@ const PageMessagerie = ({navigation}) => {
         }
 
       </ScrollView>
-      <ScrollView horizontal={true} style={{flexDirection: 'row', height: 80, paddingTop: 20}}>
-      { motDefini.length > 0 &&
-          motDefini.map((mot,key) => {
-            return (
-              <TouchableOpacity onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
-                <Text style={{marginLeft: 30}}>
-                  {mot}
-                </Text>
-              </TouchableOpacity>
-            )
-          })
-        }
-        </ScrollView>
-      <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-        <TextInput
-        style={styles.input}
-        placeholder='Ajouter votre texte ...'
-        onChangeText={(input) => setInputText(input)}
-        value={inputText}
-        onKeyPress={ (event) => {
-          if(event.nativeEvent.key == "Enter"){
-            refreshAndAddMessage(true, inputText)
-          } 
-        }}
-        onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
-        />
-        <View style={{marginRight: 20, alignSelf: 'center'}}>
-          <Button
-            title="Envoyer"
-            onPress={() => refreshAndAddMessage(true, inputText)}
+      <View>
+        <ScrollView horizontal={true} style={styles.horizontal_scroll}>
+        { motDefini.length > 0 &&
+            motDefini.map((mot,key) => {
+              return (
+                <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
+                  <Text style = {{padding:0,margin:0}}>
+                    {mot}
+                  </Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+          </ScrollView>
+        <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+          <TextInput
+          style={styles.input}
+          placeholder='Ajouter votre texte ...'
+          onChangeText={(input) => setInputText(input)}
+          value={inputText}
+          onKeyPress={ (event) => {
+            if(event.nativeEvent.key == "Enter"){
+              refreshAndAddMessage(true, inputText)
+            } 
+          }}
+          onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
           />
+          <TouchableOpacity onPress={() => refreshAndAddMessage(true, inputText)} style={styles.btn_send_return}>
+            <Text style = {{fontSize:15}}>ENVOYER</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -212,14 +213,34 @@ const getCurrentDate = () => {
 const styles = StyleSheet.create({
   input:{
     marginTop: 0,
-    marginLeft: 20,
-    marginRight: 20,
-    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    padding: 6,
     borderWidth: 0.5,
     borderRadius: 4,
     backgroundColor: "#fff",
     flex: 4,
     flexDirection: 'row'
+  },
+  horizontal_scroll:{
+    flexDirection: 'row',
+    height: 50,
+    marginBottom:5
+  },
+  horizontal_scroll_content:{
+    backgroundColor: "#dddddd",
+    padding:10,
+    paddingTop:12,
+    borderWidth:1,
+    borderColor:"rgba(128,128,128,0.1)"
+  },
+  btn_send_return:{
+    marginRight: 10,
+    padding:5,
+    alignSelf: 'center',
+    borderRadius:30,
+    borderWidth:2,
+    backgroundColor:"#1C96F9"
   }
 });
 
