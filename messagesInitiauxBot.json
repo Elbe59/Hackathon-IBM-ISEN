@@ -1,17 +1,14 @@
 [
     {
-    "mine": false,
-    "text": "Hello",
-    "horaire": "15:12"
-  },
-  {
-    "mine": false,
-    "text": "Hello",
-    "horaire": "15:12"
-  },
-  {
-    "mine": true,
-    "text": "Hello",
-    "horaire": "15:12"
-  }
+        "mine": false,
+        "text": "Bonjour à toi ! Moi c'est Botty !\nJe vais te proposer un jeu:\n\nVoici 3 indices, à toi d'essayer de résoudre mon énigme pour rentrer dans le classement:",
+        "horaire": "",
+        "isSessionOff": false
+    },
+    {
+        "mine": false,
+        "text": "Indice 1:\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26\n\nIndice 2:\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/\n\nIndice 3:\nZ = 'X'+'Y' Lille",
+        "horaire": "",
+        "isSessionOff": false
+    }
 ]
