@@ -22,8 +22,10 @@ export default function App() {
   let [YUrl, setYUrl] = useState("");
   let [Y, setY] = useState("");
   let [YUrlRoot, setYUrlRoot] = useState("");
+  let [QRCodeURL, setQRCodeURL] = useState("");
 
   let [cardsValues, setCardsValues] = useState([]);
+  let [cardsValuesASCII, setCardsValuesASCII] = useState([]);
   
   let [animationStep, setAnimationStep] = useState(0);
 
@@ -45,13 +47,15 @@ export default function App() {
     var url = "https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/"
     var res = url.split("/")
     var final = res[3].split(" ")
-    var output =""
-    final.forEach((e) => output += String.fromCharCode(e));
+    var output = []
+    final.forEach((e) => output.push(String.fromCharCode(e)));
     setCardsValues(final);
     setYUrlRoot(url);//res.slice(0,3).join("/")+"/")
-
-    setYUrl(url.replace(res[3], output));
-    getClueY("https://eqrcode.co/a/RL7uJn");
+    setCardsValuesASCII(output)
+    setYUrl(url.replace(res[3], output.join("")));
+    let QRCode = "https://eqrcode.co/a/RL7uJn";
+    setQRCodeURL(QRCode)
+    getClueY(QRCode);
   }
 
   const getClueY = (url) => {
@@ -78,9 +82,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {animationStep == 0 && <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi} onFinish={() => {setAnimationStep(animationStep+1)}}/>}
-      {animationStep == 1 && <Transition title={"Indice Y"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
-      {animationStep == 2 && <ClueY url={YUrlRoot} cardsValues={cardsValues}/> }
+      {animationStep == 0 && <Transition title={"Clue X"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
+      {animationStep == 1 && <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi} onFinish={() => {setAnimationStep(animationStep+1)}}/>}
+      {animationStep == 2 && <Transition title={"Clue Y"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
+      {animationStep == 3 && <ClueY Y={Y} QRCodeURL={QRCodeURL} translatedURL={YUrl} url={YUrlRoot} cardsValues={cardsValues} cardsValuesASCII={cardsValuesASCII}/>}
       <StatusBar style="auto" hidden />
     </View>
   );

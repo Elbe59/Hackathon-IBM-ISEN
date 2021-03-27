@@ -59,7 +59,7 @@ export const ClueX = props => {
                                     <Animatable.Text 
                                         onAnimationEnd={() => setHide_XRaw(true)}
                                         animation="fadeOutLeft"
-                                        delay={2000}
+                                        delay={3000}
                                         duration={800}
                                         direction="normal"
                                         style={styles.Number_Raw_Animation}
@@ -69,7 +69,7 @@ export const ClueX = props => {
                                 }
                                 <Animatable.Text  
                                     animation="fadeInRight"
-                                    delay={2800}
+                                    delay={3800}
                                     direction="normal"
                                     style={styles.Number_Converted_Animation}
                                     onAnimationEnd={() => props.onFinish()}

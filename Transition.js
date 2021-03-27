@@ -46,8 +46,8 @@ export const Transition = (props) => {
     }, []);
 
     return(
-        <Animated.View style={{width:"100%", height:"100%", transform: [{translateX:transitionAnim_translationX}], opacity:transitionAnim_opacity}}>
-            <Text style={{fontSize}}>{title}</Text>
+        <Animated.View style={{width:"100%", height:"100%", justifyContent:"center", alignItems:"center", transform: [{translateX:transitionAnim_translationX}], opacity:transitionAnim_opacity}}>
+            <Text style={{fontSize, textAlign:"center"}}>{title}</Text>
         </Animated.View>
     )
 
