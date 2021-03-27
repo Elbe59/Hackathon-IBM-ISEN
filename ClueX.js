@@ -50,7 +50,10 @@ export const ClueX = props => {
                         { showDecimalPi &&
                             <View style={styles.Animation_Wrapper_Bottom}>
                                 <Text style={styles.PI_Decimal_Index}>
-                                    {decimalPi}th decimal of π
+                                    The 6 digits were found at the 
+                                </Text>
+                                <Text style={styles.PI_Decimal_Index}>
+                                    {decimalPi}th decimal of π!
                                 </Text>
                                 { !hide_XRaw &&
                                     <Animatable.Text 
@@ -69,6 +72,7 @@ export const ClueX = props => {
                                     delay={2800}
                                     direction="normal"
                                     style={styles.Number_Converted_Animation}
+                                    onAnimationEnd={() => props.onFinish()}
                                 >
                                     {X}
                                 </Animatable.Text>
@@ -101,15 +105,16 @@ const styles = StyleSheet.create({
     },
     PI_Decimal_Index : {
         textAlign:"center",
-        fontSize:22,
-        marginVertical: 50
+        fontSize:18
     },
     Number_Raw_Animation : {
+        marginTop: 50,
         color:"red",
         fontSize:70,
         fontWeight:"700"
     },
     Number_Converted_Animation : {
+        marginTop: 50,
         color:"red",
         fontSize:70,
         fontWeight:"700"

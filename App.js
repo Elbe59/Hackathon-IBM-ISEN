@@ -5,6 +5,8 @@ import { ScrollView, StyleSheet, Text, View, Dimensions, Animated, TouchableOpac
 import CardFlip from 'react-native-card-flip';
 import * as Animatable from 'react-native-animatable';
 import {ClueX} from "./ClueX";
+import {ClueY} from "./ClueY";
+import { Transition } from './Transition';
 
 var DomParser = require('react-native-html-parser').DOMParser
 
@@ -19,14 +21,13 @@ export default function App() {
 
   let [YUrl, setYUrl] = useState("");
   let [Y, setY] = useState("");
+  let [YUrlRoot, setYUrlRoot] = useState("");
 
-  let [animatedStyle, setAnimatedStyle] = useState({});
-  
   let [cardsValues, setCardsValues] = useState([]);
+  
+  let [animationStep, setAnimationStep] = useState(0);
 
-  let [hide_XRaw, setHide_XRaw] = useState(false);
-
-  FetchPi = () => {
+  const FetchPi = () => {
     fetch('https://uploadbeta.com/api/pi/?cached&n=300000')
     .then(x => x.text())
     .then((text) => {
@@ -40,17 +41,20 @@ export default function App() {
     }).catch((e) => console.error(e.message))
   }
 
-  TranslateURL = () => {
+  const TranslateURL = () => {
     var url = "https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/"
     var res = url.split("/")
     var final = res[3].split(" ")
     var output =""
     final.forEach((e) => output += String.fromCharCode(e));
+    setCardsValues(final);
+    setYUrlRoot(url);//res.slice(0,3).join("/")+"/")
+
     setYUrl(url.replace(res[3], output));
     getClueY("https://eqrcode.co/a/RL7uJn");
   }
 
-  getClueY = (url) => {
+  const getClueY = (url) => {
     fetch(url).then(function (response) {
       return response.text();
     }).then(function (html) {
@@ -74,7 +78,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi}/>
+      {animationStep == 0 && <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi} onFinish={() => {setAnimationStep(animationStep+1)}}/>}
+      {animationStep == 1 && <Transition title={"Indice Y"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
+      {animationStep == 2 && <ClueY url={YUrlRoot} cardsValues={cardsValues}/> }
       <StatusBar style="auto" hidden />
     </View>
   );
