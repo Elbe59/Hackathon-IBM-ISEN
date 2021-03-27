@@ -187,6 +187,7 @@ const PageMessagerie = ({navigation}) => {
             } 
           }}
           onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+          onChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
           />
           <TouchableOpacity onPress={() => refreshAndAddMessage(true, inputText)} style={styles.btn_send_return}>
             <Text style = {{fontSize:15}}>ENVOYER</Text>
