@@ -5,12 +5,14 @@ import {
 import MessageBubble from './Components/MessageBubble';
 import messagesInitiauxBot from './messagesInitiauxBot.json'
 
+var timeOut_ID = undefined;      
 
 const App = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [dataSource, setDataSource] = useState([]);
+  const [isSessionOff, setSessionOff] = useState(false);
   const scrollViewRef = useRef();
 
   const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
@@ -37,12 +39,28 @@ const App = () => {
   }, []);
 
   const refreshAndAddMessage = (mine,textMessage) =>{
+    if(isSessionOff){
+      getSession();
+      console.log(sessionId);
+      setSessionOff(false);
+    }
     if(textMessage!=""){
       if(mine){  // Si j'envoie un message, je l'envoie aussi au Bot
-        sendMessageToBot(textMessage);
+      sendMessageToBot(textMessage);
+      if(timeOut_ID != undefined){
+        clearTimeout(timeOut_ID);
       }
+      timeOut_ID = setTimeout(() => {
+        setSessionOff(true);
+        dataSource.slice(2).map((data) => {
+          data.isSessionOff = true;
+        })
+        console.log(dataSource);
+        onRefresh();
+      }, 5*1000);
+    }
       let dataSource_temp = dataSource;
-      dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate()});
+      dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate(),"isSessionOff":false});
       setDataSource(dataSource_temp);
       onRefresh();  
       submitText();
@@ -110,6 +128,7 @@ const App = () => {
                 mine = {message.mine}
                 text = {message.text}
                 horaire = {message.horaire}
+                isSessionOff = {message.isSessionOff}
               />
             )
 
