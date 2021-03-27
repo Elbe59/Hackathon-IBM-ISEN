@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useRef, useEffect} from 'react'; 
 import { 
-  SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView
+  SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView, Image, TouchableOpacity
 } from 'react-native';
 import MessageBubble from './Components/MessageBubble';
 import messagesInitiauxBot from './messagesInitiauxBot.json'
@@ -109,11 +109,21 @@ const App = () => {
   }
 
   return(
-    <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20,paddingBottom:10}}>        
+    <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{marginTop: 20}}>
+        <Button title="RETOUR"/>
+        </View>
+      <Text style={{paddingTop: 30, paddingBottom: 20, paddingLeft: 20, alignSelf: 'center'}}>
+        Conversation avec BOTTY
+      </Text>
+      <Image style={{width: 50, height: 50, marginLeft: 40, marginTop: 15}}
+              source={require('./Components/logo_transparent_coloured.png')}
+            />
+      </View>
       <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
-        style={{flex: 2}} 
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} 
         showsVerticalScrollIndicator={false}
       >
@@ -135,6 +145,45 @@ const App = () => {
           })
         }
       </ScrollView>
+      <ScrollView horizontal={true} style={{flexDirection: 'row', height: 80, paddingTop: 20}}>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"IBM")}>
+          <Text style={{marginLeft: 30}}>IBM</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"solution")}>
+          <Text style={{marginLeft: 30}}>solution</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"J'aime Lille")}>
+          <Text style={{marginLeft: 30}}>J'aime Lille</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"réponse")}>
+          <Text style={{marginLeft: 30}}>réponse</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"énigme")}>
+          <Text style={{marginLeft: 30}}>énigme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"bonjour")}>
+          <Text style={{marginLeft: 30}}>bonjour</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"au revoir")}>
+          <Text style={{marginLeft: 30}}>au revoir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"J'aime IBM")}>
+          <Text style={{marginLeft: 30}}>J'aime IBM</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => refreshAndAddMessage(true,"Test")}>
+          <Text style={{marginLeft: 30}}>Test</Text>
+        </TouchableOpacity>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+       </ScrollView>
       <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
         <TextInput
         style={styles.input}
@@ -146,6 +195,7 @@ const App = () => {
             refreshAndAddMessage(true, inputText)
           } 
         }}
+        onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
         />
         <View style={{marginRight: 20, marginTop: 20, alignSelf: 'center'}}>
           <Button
@@ -173,7 +223,7 @@ const getCurrentDate = () => {
 
 const styles = StyleSheet.create({
   input:{
-    marginTop: 20,
+    marginTop: 0,
     marginLeft: 20,
     marginRight: 20,
     padding: 10,
