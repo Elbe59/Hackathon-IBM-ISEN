@@ -93,7 +93,7 @@ const PageMessagerie = ({navigation}) => {
 
   const sendMessageToBot = (messageText) =>{
     if(messageText == "Solution"){
-      
+      navigation.navigate("Solution");
     }
     else if(messageText == "Indice X"){
       refreshAndAddMessage(false,indice_1);
