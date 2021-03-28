@@ -73,8 +73,6 @@ const PageMessagerie = ({navigation}) => {
     }
   } 
 
-
-
   const getSession = () =>{
     fetch(url + '/session').then((response) => {
       if (response.ok) {
@@ -93,6 +91,9 @@ const PageMessagerie = ({navigation}) => {
 
   const sendMessageToBot = (messageText) =>{
     if(messageText == "Solution"){
+      setTimeout(() => {
+        setInputText("Palais Rameau");
+      }, 1000);
       navigation.navigate("Solution");
     }
     else if(messageText == "Indice X"){
