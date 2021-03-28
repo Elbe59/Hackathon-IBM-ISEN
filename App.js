@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { render } from 'react-dom';
-import { ScrollView, StyleSheet, Text, View, Dimensions, Animated, TouchableOpacity } from 'react-native';
-import CardFlip from 'react-native-card-flip';
-import * as Animatable from 'react-native-animatable';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import {ClueX} from "./ClueX";
 import {ClueY} from "./ClueY";
 import { Transition } from './Transition';
 
 var DomParser = require('react-native-html-parser').DOMParser
+
+const ClueX_Text = "Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
+const ClueY_Text = "Y = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
 
 export default function App() {
   const windowHeight = Dimensions.get('window').height;
@@ -82,10 +82,61 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {animationStep == 0 && <Transition title={"Clue X"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
-      {animationStep == 1 && <ClueX X={X} XRaw={XRaw} Pi={Pi} showDecimalPi={showDecimalPi} decimalPi={decimalPi} onFinish={() => {setAnimationStep(animationStep+1)}}/>}
-      {animationStep == 2 && <Transition title={"Clue Y"} duration={1000} fontSize={50} delay={1000} onFinish={() => setAnimationStep(animationStep+1)}/>}
-      {animationStep == 3 && <ClueY Y={Y} QRCodeURL={QRCodeURL} translatedURL={YUrl} url={YUrlRoot} cardsValues={cardsValues} cardsValuesASCII={cardsValuesASCII}/>}
+      {animationStep == 0 && 
+        <Transition 
+          title={"Indice X"} 
+          duration={1000} 
+          fontSize={50} 
+          delay={1000} 
+          onFinish={() => setAnimationStep(animationStep+1)}
+        />
+      }
+      {animationStep == 1 &&
+        <Transition
+          title={ClueX_Text} 
+          duration={1000}
+          fontSize={20}
+          delay={5000}
+          onFinish={() => setAnimationStep(animationStep+1)}
+        />
+      }
+      {animationStep == 2 && 
+        <ClueX 
+          X={X}
+          XRaw={XRaw} 
+          Pi={Pi}
+          showDecimalPi={showDecimalPi}
+          decimalPi={decimalPi}
+          onFinish={() => {setAnimationStep(animationStep+1)}}
+        />
+      }
+      {animationStep == 3 &&
+        <Transition 
+          title={"Indice Y"}
+          duration={1000}
+          fontSize={50}
+          delay={1000}
+          onFinish={() => setAnimationStep(animationStep+1)}
+        />
+      }
+      {animationStep == 4 && 
+        <Transition title={ClueY_Text}
+          duration={1000} 
+          fontSize={20} 
+          delay={3000} 
+          onFinish={() => setAnimationStep(animationStep+1)}
+        />
+      }
+      {animationStep == 5 && 
+        <ClueY 
+          Y={Y}
+          QRCodeURL={QRCodeURL}
+          translatedURL={YUrl}
+          url={YUrlRoot}
+          cardsValues={cardsValues}
+          cardsValuesASCII={cardsValuesASCII}
+        />
+      }
       <StatusBar style="auto" hidden />
     </View>
   );
