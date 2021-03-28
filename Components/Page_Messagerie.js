@@ -3,7 +3,7 @@ import {
   SafeAreaView, View, Button, RefreshControl, StyleSheet, Text,TextInput, ScrollView, Image, TouchableOpacity
 } from 'react-native';
 import { LogBox } from 'react-native';
-//LogBox.ignoreLogs(['Setting a timer']);
+LogBox.ignoreLogs(['Setting a timer']);
 import MessageBubble from './MessageBubble';
 import messagesInitiauxBot from './messagesInitiauxBot.json';
 import { Ionicons, AntDesign } from '@expo/vector-icons'; 
