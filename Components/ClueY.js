@@ -37,9 +37,7 @@ export const ClueY = props => {
     const Y = props.Y;
 
     useEffect(() => {
-        console.log(cardsValues);
         const len = url.length;
-        console.log(url)
         let n = 0;
         let s = ""
         if(len > 0){
