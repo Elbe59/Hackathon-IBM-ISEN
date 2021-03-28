@@ -143,7 +143,7 @@ const PageMessagerie = ({navigation}) => {
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} 
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       >
         { dataSource.length > 0 &&
           dataSource.map((message, index) => {
@@ -156,18 +156,17 @@ const PageMessagerie = ({navigation}) => {
                 isSessionOff = {message.isSessionOff}
               />
             )
-
           })
         }
 
       </ScrollView>
       <View>
-        <ScrollView horizontal={true} style={styles.horizontal_scroll}>
+        <ScrollView horizontal={true} style={styles.horizontal_scroll} keyboardShouldPersistTaps='always'>
         { motDefini.length > 0 &&
             motDefini.map((mot,key) => {
               return (
                 <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
-                  <Text style = {{padding:0,margin:0}}>
+                  <Text style = {{fontWeight: 'bold'}}>
                     {mot}
                   </Text>
                 </TouchableOpacity>
@@ -184,9 +183,9 @@ const PageMessagerie = ({navigation}) => {
           onKeyPress={ (event) => {
             if(event.nativeEvent.key == "Enter"){
               refreshAndAddMessage(true, inputText)
-            } 
+            }
           }}
-          onTouchStart={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+          onTouchStart={() => setTimeout(() => scrollViewRef.current.scrollToEnd({ animated: true }), 500)}
           onChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
           />
           <TouchableOpacity onPress={() => refreshAndAddMessage(true, inputText)} style={styles.btn_send_return}>

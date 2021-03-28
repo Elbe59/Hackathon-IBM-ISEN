@@ -2,3 +2,4 @@ node_modules
 yarn.lock
 .expo
 package-lock.json
+.DS_Store
