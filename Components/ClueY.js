@@ -208,7 +208,7 @@ export const ClueY = props => {
             }
             {showSearchBar && 
                 <Animated.View style={{ opacity: errorFadeInAnimation,transform: [{translateX: shakeAnimation}] }}>
-                    <Image source={require("./assets/404.png")} style={{marginTop:"10%", maxWidth:270, maxHeight:350}}/>
+                    <Image source={require("../assets/404.png")} style={{marginTop:"10%", maxWidth:270, maxHeight:350}}/>
                 </Animated.View>
             }
             {/* Here, we show the cards */}
