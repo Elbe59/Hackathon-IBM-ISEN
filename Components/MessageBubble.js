@@ -24,7 +24,7 @@ class MessageBubble extends React.Component {
         <View
           style={[
             styles.cloud,
-            {backgroundColor: (this.props.mine && !this.props.isSessionOff) ? '#007aff' : '#dddddd'}
+            {backgroundColor: (this.props.mine && !this.props.isSessionOff) ? '#287BF6' : '#dddddd'}
           ]}
         >
           {/* {
@@ -75,7 +75,7 @@ class MessageBubble extends React.Component {
                       "M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z"
                       
                   }
-                  fill={(this.props.mine && !this.props.isSessionOff) ? '#007AFF' : '#dddddd'}
+                  fill={(this.props.mine && !this.props.isSessionOff) ? '#287BF6' : '#dddddd'}
                   x="0"
                   y="0"
               />
@@ -86,7 +86,7 @@ class MessageBubble extends React.Component {
         <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
         {!this.props.mine && 
             <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-40}]}
-              source= {require('./logo_transparent_coloured.png')}
+              source= {require('../assets/iconbot.png')}
             >
             </Image>
           }
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height:38,
     width:38,
-    backgroundColor: 'rgba(52,52,52,0.5)'
+    backgroundColor: "#287BF63F"
   }
 
 })

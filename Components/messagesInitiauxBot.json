@@ -1,0 +1,20 @@
+[
+    {
+        "mine": false,
+        "text": "Bonjour à toi ! Moi c'est Botty !\nJe vais te proposer un jeu.",
+        "horaire": "",
+        "isSessionOff": false
+    },
+    {
+        "mine": false,
+        "text": "Tu as pu voir 3 indices en page d'accueil. Essaye de résoudre mon énigme afin de rejoindre le classement.",
+        "horaire": "",
+        "isSessionOff": false
+    },
+    {
+        "mine": false,
+        "text": "Si tu as besoin d'aide je peux te redonner les indices et t'aider à les résoudre.\n\nBon courage !",
+        "horaire": "",
+        "isSessionOff": false
+    }
+]
