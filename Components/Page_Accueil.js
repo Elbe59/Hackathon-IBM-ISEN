@@ -73,15 +73,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   nom_indice:{
-    marginTop: 20,
-    padding: 10,
+    marginVertical: 10,
+    padding: 15,
     color: "#287BF6",
     fontSize: 20,
     alignSelf: 'center',
     fontWeight: 'bold'
   },
   contenu_indice:{
-    padding: 10,
     fontSize: 15,
     alignSelf: 'center',
     marginHorizontal: 20,
