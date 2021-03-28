@@ -8,7 +8,7 @@ import { Transition } from './Transition';
 
 var DomParser = require('react-native-html-parser').DOMParser
 
-const ClueX_Text = "Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
+const ClueX_Text = "Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26.";
 const ClueY_Text = "Y = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
 const ClueZ_Text = "Z = 'X'+'Y' Lille";
 

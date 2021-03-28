@@ -17,7 +17,7 @@ const PageMessagerie = ({navigation}) => {
   const [dataSource, setDataSource] = useState([]);
   const [isSessionOff, setSessionOff] = useState(false);
   const scrollViewRef = useRef();
-  const motDefini = ["Solution","IBM","J\'aime Lille","Indice X","Indice Y","Indice Z","Bonjour","J\'aime IBM","Qui est tu ?"]
+  const motDefini = ["Solution","Classement", "IBM","J\'aime Lille","Indice X","Indice Y","Indice Z","Bonjour","J\'aime IBM","Qui est tu ?"]
   const indice_1 = "Indice X:\n\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
   const indice_2 = "Indice Y:\n\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
   const indice_3 = "Indice Z:\n\nZ = 'X'+'Y' Lille";

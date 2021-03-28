@@ -50,7 +50,7 @@ export const ClueX = props => {
                         { showDecimalPi &&
                             <View style={styles.Animation_Wrapper_Bottom}>
                                 <Text style={styles.PI_Decimal_Index}>
-                                    Les 6 chiffres on été trouvés à la 
+                                    Les 6 chiffres ont été trouvés à la 
                                 </Text>
                                 <Text style={styles.PI_Decimal_Index}>
                                     {decimalPi}ième décimale de π!

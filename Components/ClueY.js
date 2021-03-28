@@ -222,7 +222,7 @@ export const ClueY = props => {
                         <View style={{flexWrap:"wrap", flexDirection:"row"}}>
                             {cardsValues.map((item, index) => {
                                 return (
-                                    <CardFlip style={ styles.cardContainer } ref={ (card) => refCards["card"+index] = card }>
+                                    <CardFlip key={index} style={ styles.cardContainer } ref={ (card) => refCards["card"+index] = card }>
                                         <TouchableOpacity style={ styles.card }>
                                             <Text style={{color:"red", fontWeight:"700",fontSize:15,textAlign:"center"}}>
                                                 {item}
