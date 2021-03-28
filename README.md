@@ -13,3 +13,5 @@ Hackathon-IBM-ISEN 2021 - Team Inspir'HEI
 ## To see the slides:
 
 `run Presentation/index.html in your browser`
+
+By DUQUENNOY Emile, CALLENS Quentin, MONGENET Emile, DOLLE Lucie
