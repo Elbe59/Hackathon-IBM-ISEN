@@ -1,0 +1,26 @@
+Page,Fonction,Tâches,Poids,Poids Réel
+Accueil,Redirection,Faire un bouton pour aller sur la page suivante,5,2.33
+Accueil,,Image pour le nom de l'application,1,1
+Accueil,,Design de la page,3,3
+Conversation,,Design de la page,3,3
+Conversation,,Communiquer avec le bot,5,5
+Conversation,,Design des messages,5,5
+Conversation,,Affichage des messages,3,3
+Conversation,,Menu déroulant des messages pré-défini,1,1
+Conversation,Redirection,"""Solution"" -> lancement de la résolution de l'énigme",5,2.33
+Conversation,,Gestion de la session,5,5
+Conversation,,Scrollview envoyé vers le bas,3,3
+Conversation,Redirection,bouton de retour à l'accueil,5,2.33
+Page X,,Afficher les décimales de pi,3,3
+Page X,,Animation de la page X,5,5
+Page X,,Convertir en de la base 10 à la base 26,1,1
+Page X,Transition,Transition vers la page Y,5,2.33
+Page Y,,"Décoder le lien en caractère ""ascii""",3,3
+Page Y,,Animation de la page Y,10,10
+Page Y,,Aller sur la page web du lien décoder,5,5
+Page Y,,Scanner le QR Code,3,3
+Page Y,,Récupération du contenu de la page,3,3
+Page Y,Transition,Transition vers la page Z,5,2.33
+Page Z,,Animation de la page Z,5,5
+Page Z,,Affichage de la localisation,7,7
+Page Z,Transition,Transition vers la page des messages,5,2.33
