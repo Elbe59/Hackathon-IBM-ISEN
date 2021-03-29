@@ -14,10 +14,10 @@ const SearchStackNavigator = createStackNavigator({
       }
     },
     PageMessagerie: {
-        screen: PageMessagerie,
-        navigationOptions: {
-          headerShown: false
-        }
+      screen: PageMessagerie,
+      navigationOptions: {
+        headerShown: false
+      }
     },
     Solution: {
       screen: Solution,
@@ -27,5 +27,4 @@ const SearchStackNavigator = createStackNavigator({
     }
 
   })
-
-  export default createAppContainer(SearchStackNavigator)
+export default createAppContainer(SearchStackNavigator)

@@ -177,25 +177,24 @@ const PageMessagerie = ({navigation}) => {
             )
           })
         }
-
       </ScrollView>
       {/* Vue du support inférieur (bandeau de réponses pré-programmées et entrée texte) */}
       <View>
         {/* Vue du bandeau inférieur situé au dessus de l'entrée texte */}
         <ScrollView horizontal={true} style={styles.horizontal_scroll} keyboardShouldPersistTaps='always'>
-        { motDefini.length > 0 &&
-            motDefini.map((mot,key) => {
-              return (
-                <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
-                  <Text style = {{fontWeight: 'bold', color: '#FFF'}}>
-                    {mot}
-                  </Text>
-                </TouchableOpacity>
-              )
-            })
+          { motDefini.length > 0 &&
+              motDefini.map((mot,key) => {
+                return (
+                  <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
+                    <Text style = {{fontWeight: 'bold', color: '#FFF'}}>
+                      {mot}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              })
           }
-          </ScrollView>
-          {/* Vue de l'entrée texte et du bouton d'envoie */}
+        </ScrollView>
+        {/* Vue de l'entrée texte et du bouton d'envoie */}
         <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
           <TextInput
           style={styles.input}
