@@ -11,13 +11,17 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import { moderateScale } from 'react-native-size-matters'
 
+// Cette classe correspond à la page Accueil que l'on appelle dans Apps.js
 class PageAccueil extends React.Component {
   render(){
     return (
+      // Vue principale de la page
         <View style = {styles.principal}>
+          {/* Affichage du titre de l'application */}
             <Image style={{width: 300, height: 50, alignSelf: 'center'}}
             source={require('../assets/titre.png')}
             />
+            {/* Vue des indices */}
             <View style={{flex: 7}}>
               <Text style = {styles.nom_indice}>
                 INDICE X
@@ -38,6 +42,7 @@ class PageAccueil extends React.Component {
                 Z = 'X'+'Y' Lille
               </Text>
             </View>
+            {/* Vue avec le bouton pour se rendre sur les messages */}
             <View style={{flex: 4, justifyContent: 'center', flexDirection: 'row'}}>
               <Image style={{flex: 1, height: 300, alignSelf: 'center'}}
                 source={require('../assets/fleche1.png')}
@@ -49,6 +54,7 @@ class PageAccueil extends React.Component {
                 source={require('../assets/fleche2.png')}
               />
             </View>
+            {/* Vue du titre de fin */}
             <View style={{flex: 1}}>
               <Text style={styles.hackathon}>
                 Hackathon - IBMxISEN
