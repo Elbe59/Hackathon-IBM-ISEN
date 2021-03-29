@@ -175,19 +175,24 @@ const PageMessagerie = ({navigation}) => {
   }
 
   return(
-    <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
+    <SafeAreaView style={styles.safeViewAreaContainer}>
+      
       {/* Vue du bandeau supérieur de la page */}
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-        <TouchableOpacity onPress={() => navigation.navigate("PageAccueil")} style={[styles.btn_send_return,{marginLeft:10}]}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity 
+          onPress={() => navigation.navigate("PageAccueil")}
+          style={[styles.btn_send_return,{marginLeft:10}]}
+        >
           <AntDesign name="back" size={30} color="#287BF6" />
         </TouchableOpacity>
-        <Text style={{alignSelf: 'center', fontSize:15, flex: 1, textAlign: 'center'}}>
+        <Text style={styles.headerTitle}>
             Conversation avec BOTTY
         </Text>
-        <Image style={{width: 50, height: 50, marginTop:7, marginRight: 10}}
+        <Image style={styles.headerImage}
             source={require('../assets/iconbot.png')}
         />
       </View>
+
       {/* Vue défilante des messages échangés avec le Bot */}
       <ScrollView
         ref={scrollViewRef}
@@ -209,14 +214,23 @@ const PageMessagerie = ({navigation}) => {
           })
         }
       </ScrollView>
+      
       {/* Vue du support inférieur (bandeau de réponses pré-programmées et entrée texte) */}
       <View>
         {/* Vue du bandeau inférieur situé au dessus de l'entrée texte */}
-        <ScrollView horizontal={true} style={styles.horizontal_scroll} keyboardShouldPersistTaps='always'>
+        <ScrollView 
+          horizontal={true}
+          style={styles.horizontal_scroll} 
+          keyboardShouldPersistTaps='always'
+        >
           { motDefini.length > 0 &&
               motDefini.map((mot,key) => {
                 return (
-                  <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
+                  <TouchableOpacity 
+                    key={key}
+                    style = {styles.horizontal_scroll_content}
+                    onPress={() => refreshAndAddMessage(true,mot)} 
+                  >
                     <Text style = {{fontWeight: 'bold', color: '#FFF'}}>
                       {mot}
                     </Text>
@@ -225,25 +239,31 @@ const PageMessagerie = ({navigation}) => {
               })
           }
         </ScrollView>
+
         {/* Vue de l'entrée texte et du bouton d'envoie */}
-        <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+        <View style={styles.keyboardContainer}>
           <TextInput
-          style={styles.input}
-          placeholder='Ajouter votre texte ...'
-          onChangeText={(input) => setInputText(input)}
-          value={inputText}
-          onKeyPress={ (event) => {
-            if(event.nativeEvent.key == "Enter"){
-              refreshAndAddMessage(true, inputText)
-            }
-          }}
-          onTouchStart={() => setTimeout(() => scrollViewRef.current.scrollToEnd({ animated: true }), 500)}
-          onChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+            style={styles.input}
+            placeholder='Ajouter votre texte ...'
+            onChangeText={(input) => setInputText(input)}
+            value={inputText}
+            onKeyPress={ (event) => {
+              if(event.nativeEvent.key == "Enter"){
+                refreshAndAddMessage(true, inputText)
+              }
+            }}
+            onTouchStart={() => {
+              setTimeout(() => {
+                scrollViewRef.current.scrollToEnd({ animated: true })
+              }, 500);
+            }}
+            onChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
           />
           <TouchableOpacity onPress={() => refreshAndAddMessage(true, inputText)} style={styles.btn_send_return}>
             <Ionicons name="send" size={30} color="#287BF6" />
           </TouchableOpacity>
         </View>
+
       </View>
     </SafeAreaView>
   );
@@ -294,6 +314,32 @@ const styles = StyleSheet.create({
     padding:5,
     alignSelf: 'center',
     borderRadius:30,
+  },
+  safeViewAreaContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingTop: 20,
+    paddingBottom: 10
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center'
+  },
+  headerTitle: {
+    alignSelf: 'center',
+    fontSize: 15,
+    flex: 1,
+    textAlign: 'center'
+  },
+  headerImage: {
+    width: 50,
+    height: 50,
+    marginTop: 7,
+    marginRight: 10
+  },
+  keyboardContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
   }
 });
 
