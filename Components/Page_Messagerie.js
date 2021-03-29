@@ -10,12 +10,15 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 var timeOut_ID = undefined;      
 
+{/* Cette fonction correspond à la page messagerie que l'on appelle dans App.js,
+elle est composée des différents composants provenant de MessageBubble.js (pour l'affichage des messages) */}
+
 const PageMessagerie = ({navigation}) => {
-  const [refreshing, setRefreshing] = useState(false);
-  const [inputText, setInputText] = useState("");
-  const [sessionId, setSessionId] = useState("");
-  const [dataSource, setDataSource] = useState([]);
-  const [isSessionOff, setSessionOff] = useState(false);
+  const [refreshing, setRefreshing] = useState(false); // Variable qui indique que la page se raffraichit
+  const [inputText, setInputText] = useState(""); // Variable qui récupère la valeur de l'inputText
+  const [sessionId, setSessionId] = useState(""); // Variable qui demande une session au Bot
+  const [dataSource, setDataSource] = useState([]); // Variable contenant les messages de la conversation
+  const [isSessionOff, setSessionOff] = useState(false); // Variable dépendant du timer (permettant de mettre la session off)
   const scrollViewRef = useRef();
   const motDefini = ["Solution","Classement", "IBM","J\'aime Lille","Indice X","Indice Y","Indice Z","Bonjour","J\'aime IBM","Qui est tu ?"]
   const indice_1 = "Indice X:\n\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
@@ -25,15 +28,18 @@ const PageMessagerie = ({navigation}) => {
 
   const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
 
+  {/* Fonction permettant de stopper le programme pendant n milliseconde(s) */}
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
   
+  {/* Fonction permettant de lancer une seule fois les fonctions à l'ouverture de la page */}
   useEffect(() => {
     getFirstMessages();
     getSession(url);
   }, []) 
   
+  {/* Fonction permettant de récupérer les 3 messages initiaux du Bot que nous avons programmé (messagesInitiauxBot.json) */}
   const getFirstMessages = () => {
     let data = messagesInitiauxBot;
     for(let i = 0; i < data.length; i++)
@@ -41,11 +47,15 @@ const PageMessagerie = ({navigation}) => {
     setDataSource(data);
   }
 
+  {/* Fonction permettant de rafraichir la vue des messages afin de les actualiser */}
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(100).then(() => setRefreshing(false)); //Don't need to wait to load the messages
+    wait(100).then(() => setRefreshing(false));
   }, []);
 
+  {/* Fonction permettant :
+      - d'ajouter un message et lance la fonction onRefresh
+      - de montrer que la session est off (changement de couleur des messages (isSessionOff)) */}
   const refreshAndAddMessage = (mine,textMessage) =>{
     if(isSessionOff){
       getSession();
@@ -56,7 +66,7 @@ const PageMessagerie = ({navigation}) => {
       dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate(),"isSessionOff":false});
       setDataSource(dataSource_temp);
       onRefresh(); 
-      if(mine){  // Si j'envoie un message, je l'envoie aussi au Bot sauf si indice1-2-3 ou réponse.
+      if(mine){
         sendMessageToBot(textMessage);
       if(timeOut_ID != undefined){
         clearTimeout(timeOut_ID);
@@ -73,6 +83,7 @@ const PageMessagerie = ({navigation}) => {
     }
   } 
 
+  {/* Requête HTTP permttant de démarrer une session avec le Bot */}
   const getSession = () =>{
     fetch(url + '/session').then((response) => {
       if (response.ok) {
@@ -89,6 +100,9 @@ const PageMessagerie = ({navigation}) => {
     });
   }    
 
+  {/* Fonction permettant :
+      - d'envoyer un message au Bot (requête POST)
+      - de recevoir la réponse du Bot */}
   const sendMessageToBot = (messageText) =>{
     if(messageText == "Solution"){
       setTimeout(() => {
@@ -129,7 +143,9 @@ const PageMessagerie = ({navigation}) => {
   }
 
   return(
+    // Vue principale de la page
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
+      {/* Vue du bandeau supérieur de la page */}
       <View style={{flexDirection: 'row', alignSelf: 'center'}}>
         <TouchableOpacity onPress={() => navigation.navigate("PageAccueil")} style={[styles.btn_send_return,{marginLeft:10}]}>
           <AntDesign name="back" size={30} color="#287BF6" />
@@ -141,6 +157,7 @@ const PageMessagerie = ({navigation}) => {
             source={require('../assets/iconbot.png')}
         />
       </View>
+      {/* Vue défilante des messages échangés avec le Bot */}
       <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
@@ -160,22 +177,24 @@ const PageMessagerie = ({navigation}) => {
             )
           })
         }
-
       </ScrollView>
+      {/* Vue du support inférieur (bandeau de réponses pré-programmées et entrée texte) */}
       <View>
+        {/* Vue du bandeau inférieur situé au dessus de l'entrée texte */}
         <ScrollView horizontal={true} style={styles.horizontal_scroll} keyboardShouldPersistTaps='always'>
-        { motDefini.length > 0 &&
-            motDefini.map((mot,key) => {
-              return (
-                <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
-                  <Text style = {{fontWeight: 'bold', color: '#FFF'}}>
-                    {mot}
-                  </Text>
-                </TouchableOpacity>
-              )
-            })
+          { motDefini.length > 0 &&
+              motDefini.map((mot,key) => {
+                return (
+                  <TouchableOpacity style = {styles.horizontal_scroll_content} onPress={() => refreshAndAddMessage(true,mot)} key={key}  >
+                    <Text style = {{fontWeight: 'bold', color: '#FFF'}}>
+                      {mot}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              })
           }
-          </ScrollView>
+        </ScrollView>
+        {/* Vue de l'entrée texte et du bouton d'envoie */}
         <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
           <TextInput
           style={styles.input}
@@ -199,6 +218,7 @@ const PageMessagerie = ({navigation}) => {
   );
 }
 
+{/* Fonction permettant de récupérer l'horaire auquel le message a été envoyé ou reçu */}
 const getCurrentDate = () => {
   var dateHours = new Date().getHours();
   var dateMin = new Date().getMinutes();

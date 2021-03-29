@@ -3,30 +3,35 @@ import { View, Text } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 export const ClueZ = (props) => {
-  let [showMarker, setShowMarker] = useState(false);
-  let [showMarkerInfo, setShowMarkerInfo] = useState(false);
+  let [showMarker, setShowMarker] = useState(false); // pour le marqueur sur le palais rameau
+  let [showMarkerInfo, setShowMarkerInfo] = useState(false); // les infos du palais rameau ( plus code)
 
-  const mapRef = useRef(null);
+  const mapRef = useRef(null); 
   const markerRef = useRef(null);
 
-    // Component did mount
+    /* 
+    * Fonction qui s'exécute une seule fois après le chargement de l'élément ClueZ 
+    */
     useEffect(() => {
-        setTimeout(() => {
+        setTimeout(() => { //délai de 9 secondes
             props.onFinish();
-        }, 9000);       
+        }, 9000);     
     },[]);
 
+    /*
+    * Animation du zoom sur le palais rameau
+    */
     const zoom = () => {
         var value = mapRef.current;
         setTimeout(() => {
-            value.animateToRegion({
+            value.animateToRegion({ // coordonnées du palais rameau car pas accès via API google maps
                 latitude: 50.634167,
                 longitude: 3.050105,
                 latitudeDelta: 0.002,
                 longitudeDelta: 0.0000
             }, 3000)
             setTimeout(() => {
-                setShowMarkerInfo(true);
+                setShowMarkerInfo(true); // on affiche automatiquent les infos du marqueur
             }, 4000);
         }, 2000);
     }

@@ -3,6 +3,9 @@ import {createStackNavigator} from 'react-navigation-stack'
 import PageMessagerie from './Page_Messagerie';
 import PageAccueil from './Page_Accueil';
 import {Solution} from "./Solution"
+
+
+// Ce conteneur définit les différentes pages de notre application afin de pouvoir naviguer entre celle-ci
 const SearchStackNavigator = createStackNavigator({
     PageAccueil: {
       screen: PageAccueil,
@@ -11,10 +14,10 @@ const SearchStackNavigator = createStackNavigator({
       }
     },
     PageMessagerie: {
-        screen: PageMessagerie,
-        navigationOptions: {
-          headerShown: false
-        }
+      screen: PageMessagerie,
+      navigationOptions: {
+        headerShown: false
+      }
     },
     Solution: {
       screen: Solution,
@@ -24,5 +27,4 @@ const SearchStackNavigator = createStackNavigator({
     }
 
   })
-
-  export default createAppContainer(SearchStackNavigator)
+export default createAppContainer(SearchStackNavigator)
