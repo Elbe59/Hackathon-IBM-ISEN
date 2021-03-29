@@ -3,23 +3,26 @@ import React, {useState, useEffect} from 'react';
 import * as Animatable from 'react-native-animatable';
 
 export const ClueX = props => {
-    // Initializing variables
+    /*
+    *Initialisation de nos variables
+    */
     let scrollViewRef = React.createRef();
     let [hide_ScrollView_X, setHide_ScrollView_X] = useState(false);
     let [hide_XRaw, setHide_XRaw] = useState(false);
 
-    // Props inputs
     let Pi = props.Pi;
     let XRaw = props.XRaw;
     let X = props.X;
     let showDecimalPi = props.showDecimalPi;
     let decimalPi = props.decimalPi;
     
-    // Component did mount
+    /*
+    * Fonction qui se lance une seule à fois à l'initialisation
+    */
     useEffect(() => {
         setTimeout(() => {
             try {
-                scrollViewRef.scrollToEnd({animated: true}, 3000);
+                scrollViewRef.scrollToEnd({animated: true}, 3000); // animation du scroll jusqu'au 6 décimales de pi qu'on cherche
             } catch (error) {
                 console.error("Error: Couldn't scroll to the end.")
             }   
