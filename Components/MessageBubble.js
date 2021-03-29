@@ -1,3 +1,4 @@
+// Import
 import React from 'react'
 import {
   StyleSheet,
@@ -9,6 +10,15 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import { moderateScale } from 'react-native-size-matters'
 
+// Nous avons décidé de créer un component MessageBubble qui sera appelé a chaque ajout d'un message dans le conversation.
+// que ce message provienne du Bot ou bien de l'utilisateur. Chaque message va prendre 4 propriétés: 
+// - mine : Cette propriété permet de définir si le message provient du Bot ou de l'utilisateur.
+// - text : Cette propriété contient le texte (le corps du message).
+// - horaire : Contient l'heure d'envoie du message.
+// - isSessionOff : Défini si la session du message est fini ou non (Au bout de 5 min -> Session OFF => Message grisé).
+// Chaque MessageBubble prend toute la width de l'écran et a une hauteur défini.
+// Les messages du Bot sont mis à gauche avec l'image du BOT tandis que les messages utilisateur sont placés à droite.
+
 class MessageBubble extends React.Component {
   render(){
     return (
@@ -17,27 +27,15 @@ class MessageBubble extends React.Component {
           this.props.mine ? styles.mine : styles.not_mine,
         ]}
       >
-        
         <View
            
           style={styles.cloud_date}>
         <View
           style={[
             styles.cloud,
-            {backgroundColor: (this.props.mine && !this.props.isSessionOff) ? '#287BF6' : '#dddddd'}
+            {backgroundColor: (this.props.mine && !this.props.isSessionOff) ? '#287BF6' : '#dddddd'} //Couleur de la bulle message dépendant de l'envoyeur et si la session est OFF.
           ]}
         >
-          {/* {
-            this.props.image
-            ?
-              <Image
-                style={{alignSelf: this.props.mine ? 'flex-end' : 'flex-start' }}
-                borderRadius={10}
-                source={this.props.image}
-              />
-            :
-              null
-          } */}
           {
             this.props.text 
             ?
@@ -45,7 +43,7 @@ class MessageBubble extends React.Component {
                 style={[
                   styles.text,
                   {
-                    color: (this.props.mine || this.props.isSessionOff) ? 'white' : 'black'
+                    color: (this.props.mine || this.props.isSessionOff) ? 'white' : 'black' //Couleur du texte dépendant de l'envoyeur et si la session est OFF.
                   },
                 ]}
               >
@@ -54,7 +52,7 @@ class MessageBubble extends React.Component {
             :
               null
           }
-          <View
+          <View  // Construction des goutelettes en fonction des propriétés du composant MessageBubble.
             style={[
               styles.arrow_container,
               this.props.mine ? styles.arrow_right_container : styles.arrow_left_container
@@ -83,18 +81,19 @@ class MessageBubble extends React.Component {
             
           </View>
         </View>
-        <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}>
+        {/* Ajout d'une Image (Icone du BOT) à gauche des messages provenant du BOT. */}
+        <View style={[{flexDirection: this.props.mine ?  'row-reverse' : 'row'}]}> 
         {!this.props.mine && 
             <Image style={[styles.img_circle ,{marginLeft: this.props.mine ? 0:-40}]}
               source= {require('../assets/iconbot.png')}
             >
             </Image>
           }
+          {/* Ajout de l'horaire auquel le message a été envoyé. */}
           <Text style={this.props.mine ? styles.date_right : styles.date_left }>
               {this.props.horaire}
           </Text>
         </View>
-
         </View>
       </View>
     )
@@ -126,7 +125,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     fontSize: 15,
     lineHeight: 22,
-    maxWidth:200,  // Fait varier la taille max des msg avant passage de ligne
+    maxWidth:200,
   },
   arrow_container: {
     position:'absolute',
