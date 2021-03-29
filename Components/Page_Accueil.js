@@ -42,7 +42,7 @@ class PageAccueil extends React.Component {
                 Z = 'X'+'Y' Lille
               </Text>
             </View>
-            {/* Vue avec le bouton pour se rendre sur les messages */}
+            {/* Vue avec le bouton pour se rendre sur les messages (page messagerie) */}
             <View style={{flex: 4, justifyContent: 'center', flexDirection: 'row'}}>
               <Image style={{flex: 1, height: 300, alignSelf: 'center'}}
                 source={require('../assets/fleche1.png')}
