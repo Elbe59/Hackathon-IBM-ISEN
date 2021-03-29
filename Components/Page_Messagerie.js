@@ -10,36 +10,44 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 var timeOut_ID = undefined;      
 
-{/* Cette fonction correspond à la page messagerie que l'on appelle dans App.js,
-elle est composée des différents composants provenant de MessageBubble.js (pour l'affichage des messages) */}
-
+/**
+ * Cette fonction correspond à la page messagerie que l'on appelle dans App.js,
+ * elle est composée des différents composants provenant de MessageBubble.js 
+ * (pour l'affichage des messages) 
+ */
 const PageMessagerie = ({navigation}) => {
+  
+  // Variables de state
   const [refreshing, setRefreshing] = useState(false); // Variable qui indique que la page se raffraichit
   const [inputText, setInputText] = useState(""); // Variable qui récupère la valeur de l'inputText
   const [sessionId, setSessionId] = useState(""); // Variable qui demande une session au Bot
   const [dataSource, setDataSource] = useState([]); // Variable contenant les messages de la conversation
   const [isSessionOff, setSessionOff] = useState(false); // Variable dépendant du timer (permettant de mettre la session off)
+  
+  // Variable qui fait référence à notre scrollView, cela permet de la manipuler depuis notre code
   const scrollViewRef = useRef();
+  
+  // Valeurs par défaut de nos messages
   const motDefini = ["Solution","Classement", "IBM","J\'aime Lille","Indice X","Indice Y","Indice Z","Bonjour","J\'aime IBM","Qui est tu ?"]
   const indice_1 = "Indice X:\n\nX = Trouver le nombre de 6 chiffres se positionnant après la première occurence de 036695 dans les décimales de PI. Convertir ce nombre de la base10 en base26";
   const indice_2 = "Indice Y:\n\nY = https://pasteboard.co/074 065 051 049 084 077 048 046 112 110 103/";
   const indice_3 = "Indice Z:\n\nZ = 'X'+'Y' Lille";
 
-
+  // Lien de l'API du Bot
   const url = "https://nodejs-express-app-cxlkb-2020-11-30.eu-gb.mybluemix.net/ai"
 
-  {/* Fonction permettant de stopper le programme pendant n milliseconde(s) */}
+  /* Fonction permettant de stopper le programme pendant n milliseconde(s) */
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
   
-  {/* Fonction permettant de lancer une seule fois les fonctions à l'ouverture de la page */}
+  /* Fonction permettant de lancer une seule fois les fonctions à l'ouverture de la page */
   useEffect(() => {
     getFirstMessages();
     getSession(url);
   }, []) 
   
-  {/* Fonction permettant de récupérer les 3 messages initiaux du Bot que nous avons programmé (messagesInitiauxBot.json) */}
+  /* Fonction permettant de récupérer les 3 messages initiaux du Bot que nous avons programmé (messagesInitiauxBot.json) */
   const getFirstMessages = () => {
     let data = messagesInitiauxBot;
     for(let i = 0; i < data.length; i++)
@@ -47,43 +55,60 @@ const PageMessagerie = ({navigation}) => {
     setDataSource(data);
   }
 
-  {/* Fonction permettant de rafraichir la vue des messages afin de les actualiser */}
+  /* Fonction permettant de rafraichir la vue des messages afin de les actualiser */
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(100).then(() => setRefreshing(false));
   }, []);
 
-  {/* Fonction permettant :
-      - d'ajouter un message et lance la fonction onRefresh
-      - de montrer que la session est off (changement de couleur des messages (isSessionOff)) */}
+  /**
+   * Fonction permettant :
+   * - d'ajouter un message et lance la fonction onRefresh
+   * - de montrer que la session est off (changement de couleur des messages (isSessionOff)) 
+   */
   const refreshAndAddMessage = (mine,textMessage) =>{
     if(isSessionOff){
       getSession();
       setSessionOff(false);
     }
+
     if(textMessage!=""){
+
+      // On joute notre message à notre state
       let dataSource_temp = dataSource;
-      dataSource_temp.push({"mine":mine,"text":textMessage,"horaire":getCurrentDate(),"isSessionOff":false});
+      dataSource_temp.push({
+        "mine":mine,
+        "text":textMessage,
+        "horaire":getCurrentDate(),
+        "isSessionOff":false
+      });
       setDataSource(dataSource_temp);
+
       onRefresh(); 
+      
       if(mine){
         sendMessageToBot(textMessage);
-      if(timeOut_ID != undefined){
-        clearTimeout(timeOut_ID);
+        
+        // Ici, on réinitialise ou initialise notre timer de 5min pour le time-out
+        if(timeOut_ID != undefined){
+          clearTimeout(timeOut_ID);
+        }
+        timeOut_ID = setTimeout(() => {
+          // En cas de time-out, on grise tous les messages et on indique 
+          // que la session est off pour la relancer avec le prochain message.
+          setSessionOff(true);
+          dataSource.slice(3).map((data) => {
+            data.isSessionOff = true;
+          })
+          onRefresh();
+        }, 5*60*1000);
       }
-      timeOut_ID = setTimeout(() => {
-        setSessionOff(true);
-        dataSource.slice(3).map((data) => {
-          data.isSessionOff = true;
-        })
-        onRefresh();
-      }, 5*60*1000);
-    }
-      setInputText("")
+
+      setInputText("") // on réinitialise notre textinput
     }
   } 
 
-  {/* Requête HTTP permttant de démarrer une session avec le Bot */}
+  /* Requête HTTP permttant de démarrer une session avec le Bot */
   const getSession = () =>{
     fetch(url + '/session').then((response) => {
       if (response.ok) {
@@ -93,6 +118,7 @@ const PageMessagerie = ({navigation}) => {
       }
     })
     .then((responseJson) => {
+      // On enregistre notre session_id dans le state pour la suite
       setSessionId(responseJson.response);
     })
     .catch((error) => {
@@ -100,10 +126,15 @@ const PageMessagerie = ({navigation}) => {
     });
   }    
 
-  {/* Fonction permettant :
-      - d'envoyer un message au Bot (requête POST)
-      - de recevoir la réponse du Bot */}
+  /**
+   * Fonction permettant :
+   * - d'envoyer un message au Bot (requête POST)
+   * - de recevoir la réponse du Bot
+   */
   const sendMessageToBot = (messageText) =>{
+
+    // On regarde d'abord si notre message correspond à un message customisé.
+    // Auquel cas l'application devra réagir.
     if(messageText == "Solution"){
       setTimeout(() => {
         setInputText("Palais Rameau");
@@ -120,6 +151,7 @@ const PageMessagerie = ({navigation}) => {
       refreshAndAddMessage(false,indice_3);
     }
     else{
+      // Si le message ne correspond pas à un message custimisé, on envoie le message au bot.
       fetch(url, { 
         method: "POST", 
         headers: { 'Content-Type': 'application/json' }, 
@@ -133,17 +165,16 @@ const PageMessagerie = ({navigation}) => {
       }
       })
       .then((responseJson) => {
+        // On récupère le message que le bot a envoyé en réponse et on l'enregistre.
         refreshAndAddMessage(false,responseJson.response);
       })
       .catch((error) => {
         console.log(error)
       });
     }
-
   }
 
   return(
-    // Vue principale de la page
     <SafeAreaView style={{flex: 1, flexDirection: 'column',paddingTop: 20, paddingBottom:10}}>
       {/* Vue du bandeau supérieur de la page */}
       <View style={{flexDirection: 'row', alignSelf: 'center'}}>
@@ -218,7 +249,7 @@ const PageMessagerie = ({navigation}) => {
   );
 }
 
-{/* Fonction permettant de récupérer l'horaire auquel le message a été envoyé ou reçu */}
+/* Fonction permettant de récupérer l'horaire auquel le message a été envoyé ou reçu */
 const getCurrentDate = () => {
   var dateHours = new Date().getHours();
   var dateMin = new Date().getMinutes();

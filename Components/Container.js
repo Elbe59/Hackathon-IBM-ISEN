@@ -5,7 +5,8 @@ import PageAccueil from './Page_Accueil';
 import {Solution} from "./Solution"
 
 
-// Ce conteneur définit les différentes pages de notre application afin de pouvoir naviguer entre celle-ci
+// Ce conteneur définit les différentes pages de notre application afin de pouvoir naviguer entre celles-ci
+// headerShow: false permet d'enlever l'entête des automatique des pages (leur titre et une bordure).
 const SearchStackNavigator = createStackNavigator({
     PageAccueil: {
       screen: PageAccueil,
